@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة خلك نذل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* تعريف متغيرات الألوان */
+        :root {
+            --team1-color: #ff6b6b; /* افتراضي */
+            --team2-color: #00eaff; /* افتراضي */
+        }
+        body {
+            font-size: 1.5rem; /* تكبير الخط العام */
+        }
+        h1 {
+            font-size: 3rem; /* تكبير عنوان اللعبة */
+        }
+        .question, #currentTurn, #timer, .team-box, .button-container button, .modal-content {
+            font-size: 1.8rem; /* تكبير الخط للأسئلة والعناصر الرئيسية */
+        }
+        .team-box.team1 {
+            background: var(--team1-color)33; /* خلفية مع شفافية */
+            color: var(--team1-color); /* لون النصوص */
+            transition: all 0.3s ease; /* تأثير انتقال سلس */
+        }
+        .team-box.team2 {
+            background: var(--team2-color)33; /* خلفية مع شفافية */
+            color: var(--team2-color); /* لون النصوص */
+            transition: all 0.3s ease; /* تأثير انتقال سلس */
+        }
+        .team-box.team1 h3, .team-box.team2 h3 {
+            color: inherit; /* لون العنوان يرث من الأب */
+        }
+        #currentTurn.team1-turn {
+            color: var(--team1-color);
+        }
+        #currentTurn.team2-turn {
+            color: var(--team2-color);
+        }
+        .team-box.active-team {
+            border: 3px solid currentColor; /* إطار مميز للفريق الحالي */
+            transform: scale(1.05); /* تكبير طفيف */
+            box-shadow: 0 0 10px currentColor; /* تأثير وميض */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://img.icons8.com/doodle/100/000000/question-mark.png" class="game-icon" alt="Question Icon">
+        <h1>لعبة خلك نذل</h1>
+        <div id="currentTurn">دور: الفريق 1</div>
+        <div id="timer">الوقت المتبقي: 30</div>
+        <div class="question" id="question"></div>
+        <div id="media"></div>
+        <div class="button-container">
+            <button onclick="revealAnswer()">اكشف الإجابة<span class="info">؟<div class="popover">يكشف الإجابة الصحيحة للسؤال الحالي</div></span></button>
+            <button onclick="skipQuestion()" id="skipBtn">تخطي السؤال<span class="info">؟<div class="popover">يتيح للفريق تخطي السؤال للفريق الآخر بنصف النقاط (مرة واحدة)</div></span></button>
+            <button onclick="doubleChallenge()" id="doubleBtn">التحدي المضاعف<span class="info">؟<div class="popover">يضاعف نقاط السؤال الحالي (مرة واحدة)</div></span></button>
+            <button onclick="callFriend()" id="callFriendBtn">اتصال بصديق<span class="info">؟<div class="popover">يعرض خيارات متعددة لمساعدة صديق (مرة واحدة)</div></span></button>
+        </div>
+        <div id="result"></div>
+        <div class="team-container">
+            <div class="team-box team1" id="team1Box">
+                <h3 id="team1Name">الفريق 1</h3>
+                <div id="team1Score">نقاط: 0</div>
+                <div id="team1Energy" class="energy-text">طاقة الحماية: 0 (مستخدم: 0/2)<span class="info">؟<div class="popover">تُكتسب عند الإجابة الصحيحة وتُستخدم لتجنب خسارة النقاط (حتى مرتين)</div></span></div>
+                <div id="team1Skip" class="energy-text">تخطي: متاح</div>
+                <div id="team1Double" class="energy-text">تحدي مضاعف: متاح</div>
+                <div id="team1Call" class="energy-text">اتصال بصديق: متاح</div>
+            </div>
+            <div class="team-box team2" id="team2Box">
+                <h3 id="team2Name">الفريق 2</h3>
+                <div id="team2Score">نقاط: 0</div>
+                <div id="team2Energy" class="energy-text">طاقة الحماية: 0 (مستخدم: 0/2)<span class="info">؟<div class="popover">تُكتسب عند الإجابة الصحيحة وتُستخدم لتجنب خسارة النقاط (حتى مرتين)</div></span></div>
+                <div id="team2Skip" class="energy-text">تخطي: متاح</div>
+                <div id="team2Double" class="energy-text">تحدي مضاعف: متاح</div>
+                <div id="team2Call" class="energy-text">اتصال بصديق: متاح</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- النوافذ المنبثقة -->
+    <div class="modal" id="answerModal">
+        <div class="modal-content">
+            <h2>الإجابة الصحيحة</h2>
+            <p id="answerText"></p>
+            <button onclick="teamCorrect(currentTurn)" style="background: linear-gradient(45deg, #2ecc71, #27ae60);">صحيح</button>
+            <button onclick="wrongAnswer()" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">خاطئ</button>
+        </div>
+    </div>
+    <div class="modal" id="protectionModal">
+        <div class="modal-content">
+            <h2>استخدام الحماية؟</h2>
+            <button onclick="useProtection()" style="background: linear-gradient(45deg, #3498db, #2980b9);">استخدام الحماية</button>
+            <button onclick="losePoints()" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">خسارة النقاط</button>
+        </div>
+    </div>
+    <div class="modal" id="readyModal">
+        <div class="modal-content">
+            <h2 id="readyText">جاهزين؟</h2>
+            <button onclick="startNextTurn()">جاهز</button>
+        </div>
+    </div>
+    <div class="modal" id="callFriendModal">
+        <div class="modal-content">
+            <h2>اتصال بصديق</h2>
+            <div id="callFriendOptions"></div>
+            <button onclick="closeCallFriend()">إغلاق</button>
+        </div>
+    </div>
+    <div class="modal" id="penaltyModal">
+        <div class="modal-content">
+            <h2>نتيجة اللعبة والحكم</h2>
+            <p id="penaltyText"></p>
+            <button onclick="restartGame()">إعادة اللعب</button>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+    <script src="questions.js"></script>
+    <script src="footer.js"></script>
+    <script src="penalties.js"></script>
+    <script src="game.js"></script>
+    <script src="ui.js"></script>
+    <script>
+        // تطبيق الألوان من localStorage
+        const team1Color = localStorage.getItem("team1Color") || "#ff6b6b";
+        const team2Color = localStorage.getItem("team2Color") || "#00eaff";
+        document.documentElement.style.setProperty('--team1-color', team1Color);
+        document.documentElement.style.setProperty('--team2-color', team2Color);
+
+        // السكربت التفاعلي للفريق الحالي
+        function updateActiveTeam() {
+            const team1Box = document.getElementById("team1Box");
+            const team2Box = document.getElementById("team2Box");
+            if (currentTurn === 1) {
+                team1Box.classList.add("active-team");
+                team2Box.classList.remove("active-team");
+            } else {
+                team2Box.classList.add("active-team");
+                team1Box.classList.remove("active-team");
+            }
+        }
+
+        // استدعاء التحديث عند التحميل وكل تغيير في الدور
+        window.addEventListener('load', updateActiveTeam);
+        document.addEventListener('turnChanged', updateActiveTeam); // حدث مخصص من game.js
+    </script>
+</body>
+</html>

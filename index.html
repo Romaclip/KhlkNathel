@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعداد لعبة خلّك نذل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #0f0c29, #302b63);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            min-height: 100vh;
+        }
+        .container {
+            margin: 20px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            max-width: 1200px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-size: 44px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            color: #00eaff;
+        }
+        h3 {
+            font-size: 28px;
+            margin: 15px 0;
+            color: #e0e0e0;
+        }
+        button {
+            padding: 12px 35px;
+            font-size: 18px;
+            margin: 10px;
+            background: linear-gradient(45deg, #ff2e63, #ff6b6b);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        button:hover {
+            background: linear-gradient(45deg, #ff6b6b, #ff2e63);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+        input, select {
+            padding: 12px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            width: 250px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .game-icon {
+            width: 140px;
+            margin: 20px auto;
+            display: block;
+            filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.6));
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            text-align: right;
+            color: #fff;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-content h2 {
+            font-size: 32px;
+            color: #00eaff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .modal-content p {
+            font-size: 18px;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        .modal-content button {
+            margin: 10px auto;
+            display: block;
+        }
+        /* تنسيق الجدول */
+        .teams-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        .teams-table th, .teams-table td {
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .teams-table th {
+            background: rgba(255, 255, 255, 0.2);
+            color: #00eaff;
+        }
+        .teams-table td {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        /* تنسيق حقل اختيار اللون */
+        input[type="color"] {
+            width: 60px;
+            height: 40px;
+            padding: 0;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="/game/logo.png" class="game-icon" width="auto" height="auto" alt="شعار خلّك نذل">
+        <p style="font-size: 18px; color: #e0e0e0; margin: 20px 0;">
+            مرحبًا بكم في "خلّك نذل"! جهزوا أنفسكم لتحدي مليء بالنذالة والضحك!
+        </p>
+        <h1>إعداد لعبة خلّك نذل</h1>
+        
+        <!-- جدول الفرق -->
+        <table class="teams-table">
+            <thead>
+                <tr>
+                    <th>اسم الفريق</th>
+                    <th>اللون</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="team1Row">
+                    <td><input type="text" id="team1NameInput" placeholder="اسم الفريق 1"></td>
+                    <td><input type="color" id="team1ColorInput" value="#ff6b6b"></td>
+                </tr>
+                <tr id="team2Row">
+                    <td><input type="text" id="team2NameInput" placeholder="اسم الفريق 2"></td>
+                    <td><input type="color" id="team2ColorInput" value="#00eaff"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="difficulty">
+            <h3>اختر مستوى الصعوبة</h3>
+            <select id="difficulty">
+                <option value="easy">سهل (30 ثانية)</option>
+                <option value="medium">متوسط (20 ثانية)</option>
+                <option value="hard">صعب (10 ثانية)</option>
+            </select>
+        </div>
+        <br>
+        <button onclick="goToCategories()">التالي: اختر الفئات</button>
+        <button onclick="generateRandomNames()">أسماء عشوائية</button>
+        <button onclick="showRules()">قوانين اللعبة</button>
+        <button onclick="resetForm()">إعادة تعيين</button>
+    </div>
+
+    <div class="modal" id="rulesModal">
+        <div class="modal-content">
+            <h2>قوانين لعبة خلّك نذل</h2>
+            <p>لعبة "خلّك نذل" هي لعبة تنافسية بين فريقين تهدف إلى اختبار المعرفة والسرعة في الإجابة على أسئلة متنوعة من فئات مختلفة.</p>
+            <p><strong>كيفية اللعب:</strong></p>
+            <p>- يتم تقسيم اللاعبين إلى فريقين، كل فريق يختار اسمًا له.</p>
+            <p>- يتم اختيار مستوى الصعوبة (سهل: 30 ثانية، متوسط: 20 ثانية، صعب: 10 ثانية) للإجابة على كل سؤال.</p>
+            <p>- في كل دور، يختار الفريق المنافس فئة السؤال للفريق الحالي، ويظهر سؤال مع نقاط محددة.</p>
+            <p>- الهدف هو الإجابة بشكل صحيح خلال الوقت المحدد لكسب النقاط.</p>
+            <p><strong>النقاط والطاقة:</strong></p>
+            <p>- الإجابة الصحيحة تمنح الفريق النقاط المعروضة ونقطة طاقة واحدة.</p>
+            <p>- الإجابة الخاطئة تفقد الفريق النقاط المعروضة، ما لم يستخدم "طاقة الحماية" (متاحة مرتين فقط).</p>
+            <p><strong>الخيارات الخاصة:</strong></p>
+            <p>- <strong>تخطي السؤال:</strong> يمكن للفريق تخطي سؤال مرة واحدة، فيتم نقله للفريق الآخر بـ 50% من النقاط الأصلية.</p>
+            <p>- <strong>التحدي المضاعف:</strong> يضاعف نقاط السؤال مرة واحدة، لكن الخسارة ستكون مضاعفة أيضًا.</p>
+            <p>- <strong>اتصال بصديق:</strong> يعرض خيارات متعددة (تشمل الإجابة الصحيحة) مرة واحدة للمساعدة.</p>
+            <p><strong>نهاية اللعبة:</strong></p>
+            <p>- تنتهي اللعبة عندما يصل أحد الفريقين إلى 2000 نقطة، ويتم إعلان الفائز مع إحصائيات اللعب.</p>
+            <button onclick="closeRules()">إغلاق</button>
+        </div>
+    </div>
+    <div id="footer-placeholder"></div>
+    <script src="footer.js"></script>
+    <script>
+        // قائمة أسماء عشوائية
+        const randomNames = [
+            "الصقور", "النمور", "الأبطال", "المحاربون", "الذئاب", "الفهود",
+            "التنانين", "العمالقة", "الأسود", "الفرسان", "الصيادون", "النجوم"
+        ];
+
+        function goToCategories() {
+            const team1Name = document.getElementById("team1NameInput").value.trim();
+            const team2Name = document.getElementById("team2NameInput").value.trim();
+            const team1Color = document.getElementById("team1ColorInput").value;
+            const team2Color = document.getElementById("team2ColorInput").value;
+            const difficulty = document.getElementById("difficulty").value;
+
+            if (!team1Name || !team2Name) {
+                alert("يرجى إدخال أسماء الفريقين!");
+                return;
+            }
+            if (team1Name === team2Name) {
+                alert("أسماء الفريقين يجب أن تكون مختلفة!");
+                return;
+            }
+
+            localStorage.setItem("team1Name", team1Name);
+            localStorage.setItem("team2Name", team2Name);
+            localStorage.setItem("team1Color", team1Color);
+            localStorage.setItem("team2Color", team2Color);
+            localStorage.setItem("difficulty", difficulty);
+            window.location.href = "categories.html";
+        }
+
+        function showRules() {
+            document.getElementById("rulesModal").style.display = "block";
+        }
+
+        function closeRules() {
+            document.getElementById("rulesModal").style.display = "none";
+        }
+
+        function resetForm() {
+            document.getElementById("team1NameInput").value = "";
+            document.getElementById("team2NameInput").value = "";
+            document.getElementById("team1ColorInput").value = "#ff6b6b";
+            document.getElementById("team2ColorInput").value = "#00eaff";
+            document.getElementById("difficulty").value = "easy";
+            updateTeamColors();
+        }
+
+        function generateRandomNames() {
+            const shuffledNames = randomNames.sort(() => 0.5 - Math.random());
+            document.getElementById("team1NameInput").value = shuffledNames[0];
+            document.getElementById("team2NameInput").value = shuffledNames[1];
+            updateTeamColors();
+        }
+
+        function updateTeamColors() {
+            const team1Color = document.getElementById("team1ColorInput").value;
+            const team2Color = document.getElementById("team2ColorInput").value;
+            document.getElementById("team1Row").style.backgroundColor = `${team1Color}33`; // شفافية خفيفة
+            document.getElementById("team2Row").style.backgroundColor = `${team2Color}33`; // شفافية خفيفة
+        }
+
+        // تحديث الألوان عند تغيير اللون
+        document.getElementById("team1ColorInput").addEventListener("input", updateTeamColors);
+        document.getElementById("team2ColorInput").addEventListener("input", updateTeamColors);
+
+        // تحديث الألوان عند التحميل
+        window.onload = updateTeamColors;
+    </script>
+</body>
+</html>
