@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
             direction: rtl;
             min-height: 100vh;
         }
+
         .container {
             margin: 20px auto;
             padding: 30px;
@@ -25,16 +27,19 @@
             max-width: 1200px;
             backdrop-filter: blur(10px);
         }
+
         h1 {
             font-size: 44px;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
             color: #00eaff;
         }
+
         h3 {
             font-size: 28px;
             margin: 15px 0;
             color: #e0e0e0;
         }
+
         button {
             padding: 12px 35px;
             font-size: 18px;
@@ -47,27 +52,33 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
         }
+
         button:hover {
             background: linear-gradient(45deg, #ff6b6b, #ff2e63);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         }
-        input, select {
+
+        input,
+        select {
             padding: 12px;
             margin: 10px;
-            font-size: 16px;
+            font-size: 20px;
+            /* تكبير الخط */
             border: none;
             border-radius: 25px;
             width: 250px;
             background: rgba(255, 255, 255, 0.95);
             box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
         }
+
         .game-icon {
             width: 140px;
             margin: 20px auto;
             display: block;
             filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.6));
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -78,6 +89,7 @@
             background: rgba(0, 0, 0, 0.8);
             z-index: 1000;
         }
+
         .modal-content {
             position: absolute;
             top: 50%;
@@ -88,47 +100,62 @@
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
-            text-align: right;
+            text-align: center;
+            /* النص في المنتصف */
             color: #fff;
             max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
         }
+
         .modal-content h2 {
             font-size: 32px;
             color: #00eaff;
             margin-bottom: 20px;
-            text-align: center;
         }
+
         .modal-content p {
             font-size: 18px;
             margin: 10px 0;
             line-height: 1.6;
         }
+
+        .modal-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
         .modal-content button {
             margin: 10px auto;
             display: block;
         }
-        /* تنسيق الجدول */
+
         .teams-table {
             width: 80%;
             margin: 20px auto;
             border-collapse: collapse;
         }
-        .teams-table th, .teams-table td {
+
+        .teams-table th,
+        .teams-table td {
             padding: 15px;
             font-size: 18px;
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
+
         .teams-table th {
             background: rgba(255, 255, 255, 0.2);
             color: #00eaff;
         }
+
         .teams-table td {
             background: rgba(255, 255, 255, 0.1);
         }
-        /* تنسيق حقل اختيار اللون */
+
         input[type="color"] {
             width: 60px;
             height: 40px;
@@ -140,15 +167,15 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <img src="/game/logo.png" class="game-icon" width="auto" height="auto" alt="شعار خلّك نذل">
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" class="game-icon" width="auto" height="auto" alt="شعار خلّك نذل">
         <p style="font-size: 18px; color: #e0e0e0; margin: 20px 0;">
             مرحبًا بكم في "خلّك نذل"! جهزوا أنفسكم لتحدي مليء بالنذالة والضحك!
         </p>
         <h1>إعداد لعبة خلّك نذل</h1>
-        
-        <!-- جدول الفرق -->
+
         <table class="teams-table">
             <thead>
                 <tr>
@@ -171,46 +198,93 @@
         <div class="difficulty">
             <h3>اختر مستوى الصعوبة</h3>
             <select id="difficulty">
-                <option value="easy">سهل (30 ثانية)</option>
-                <option value="medium">متوسط (20 ثانية)</option>
-                <option value="hard">صعب (10 ثانية)</option>
+                <option value="easy">سهل (60 ثانية)</option>
+                <option value="medium">متوسط (30 ثانية)</option>
+                <option value="hard">صعب (15 ثانية)</option>
             </select>
         </div>
         <br>
         <button onclick="goToCategories()">التالي: اختر الفئات</button>
         <button onclick="generateRandomNames()">أسماء عشوائية</button>
         <button onclick="showRules()">قوانين اللعبة</button>
+        <button onclick="showGameplay()">طريقة اللعب</button>
         <button onclick="resetForm()">إعادة تعيين</button>
     </div>
 
     <div class="modal" id="rulesModal">
         <div class="modal-content">
             <h2>قوانين لعبة خلّك نذل</h2>
-            <p>لعبة "خلّك نذل" هي لعبة تنافسية بين فريقين تهدف إلى اختبار المعرفة والسرعة في الإجابة على أسئلة متنوعة من فئات مختلفة.</p>
-            <p><strong>كيفية اللعب:</strong></p>
-            <p>- يتم تقسيم اللاعبين إلى فريقين، كل فريق يختار اسمًا له.</p>
-            <p>- يتم اختيار مستوى الصعوبة (سهل: 30 ثانية، متوسط: 20 ثانية، صعب: 10 ثانية) للإجابة على كل سؤال.</p>
-            <p>- في كل دور، يختار الفريق المنافس فئة السؤال للفريق الحالي، ويظهر سؤال مع نقاط محددة.</p>
-            <p>- الهدف هو الإجابة بشكل صحيح خلال الوقت المحدد لكسب النقاط.</p>
-            <p><strong>النقاط والطاقة:</strong></p>
-            <p>- الإجابة الصحيحة تمنح الفريق النقاط المعروضة ونقطة طاقة واحدة.</p>
-            <p>- الإجابة الخاطئة تفقد الفريق النقاط المعروضة، ما لم يستخدم "طاقة الحماية" (متاحة مرتين فقط).</p>
+            <p>لعبة "خلّك نذل" هي تحدٍ تنافسي بين فريقين يجمع بين المعرفة، السرعة، والنذالة الاستراتيجية. الهدف هو جمع
+                النقاط والوصول إلى 2000 نقطة للفوز!</p>
+            <p><strong>الإعداد:</strong></p>
+            <p>- يتكون كل فريق من لاعبين يختارون اسمًا ولونًا مميزًا.</p>
+            <p>- يتم اختيار مستوى الصعوبة: سهل (60 ثانية)، متوسط (30 ثانية)، أو صعب (15 ثانية).</p>
+            <p>- كل فريق يختار فئات للفريق المنافس مع نقاط فريدة (100، 200، 300، 400).</p>
+            <p><strong>آلية اللعب:</strong></p>
+            <p>- يتناوب الفريقان في الإجابة على أسئلة من الفئات التي اختارها الفريق الآخر.</p>
+            <p>- الإجابة الصحيحة تمنح النقاط المحددة ونقطة طاقة حماية.</p>
+            <p>- انتهاء الوقت يخصم النقاط كاملة، بينما الإجابة الخاطئة تخصم نصف النقاط (ما لم تُستخدم الحماية).</p>
+            <p>- إذا تم تخطي السؤال، يُعرض على الفريق الآخر بنصف النقاط الأصلية.</p>
             <p><strong>الخيارات الخاصة:</strong></p>
-            <p>- <strong>تخطي السؤال:</strong> يمكن للفريق تخطي سؤال مرة واحدة، فيتم نقله للفريق الآخر بـ 50% من النقاط الأصلية.</p>
-            <p>- <strong>التحدي المضاعف:</strong> يضاعف نقاط السؤال مرة واحدة، لكن الخسارة ستكون مضاعفة أيضًا.</p>
-            <p>- <strong>اتصال بصديق:</strong> يعرض خيارات متعددة (تشمل الإجابة الصحيحة) مرة واحدة للمساعدة.</p>
-            <p><strong>نهاية اللعبة:</strong></p>
-            <p>- تنتهي اللعبة عندما يصل أحد الفريقين إلى 2000 نقطة، ويتم إعلان الفائز مع إحصائيات اللعب.</p>
+            <p>- <strong>طاقة الحماية:</strong> تمنع خسارة النقاط عند الإجابة الخاطئة (متاحة مرتين).</p>
+            <p>- <strong>تخطي السؤال:</strong> مرة واحدة لكل فريق، ينقل السؤال للمنافس بنصف النقاط.</p>
+            <p>- <strong>التحدي المضاعف:</strong> يضاعف النقاط مرة واحدة، لكن الخسارة تكون مضاعفة أيضًا.</p>
+            <p>- <strong>اتصال بصديق:</strong> يظهر خيارات (تشمل الصحيحة) مرة واحدة للمساعدة.</p>
+            <p>- <strong>كرت النذالة:</strong> يسرق 20% من نقاط الفريق المنافس مرة واحدة.</p>
+            <p><strong>الفوز:</strong></p>
+            <p>- أول فريق يصل إلى 2000 نقطة يفوز، مع عرض إحصائيات ومهمة مضحكة للخاسر.</p>
             <button onclick="closeRules()">إغلاق</button>
+        </div>
+    </div>
+
+    <div class="modal" id="gameplayModal">
+        <div class="modal-content">
+            <h2>طريقة اللعب في خلّك نذل</h2>
+            <p>إليك شرحًا خطوة بخطوة لكيفية لعب "خلّك نذل" مع أمثلة وصور توضيحية:</p>
+            <p><strong>1. إعداد اللعبة:</strong></p>
+            <p>- أدخل اسمي الفريقين واختر لونًا لكل فريق (مثل "الصقور" بالأحمر و"النمور" بالأزرق).</p>
+            <p>- حدد الصعوبة (مثل "متوسط: 20 ثانية").</p>
+            <p><strong>2. اختيار الفئات والنقاط:</strong></p>
+            <p>- كل فريق يختار 4 فئات للمنافس (مثل "رياضة"، "تاريخ") مع نقاط فريدة (100، 200، 300، 400).</p>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_063918393.png?raw=true"
+                alt="شاشة اختيار الفئات">
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064121123.png?raw=true
+            " alt="شاشة اختيار الفئات">
+
+            <p><strong>3. بدء الجولة:</strong></p>
+            <p>- يظهر سؤال للفريق 1 من فئة اختارها الفريق 2 (مثل "ما عاصمة فرنسا؟" بـ 300 نقطة).</p>
+            <p>- لديك 20 ثانية للإجابة أو استخدام خيار خاص.</p>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064307074.png?raw=true"
+                alt="شاشة السؤال">
+            <p><strong>4. الإجابة أو الخيارات:</strong></p>
+            <p>- إجابة صحيحة: تكسب 300 نقطة وطاقة حماية.</p>
+            <p>- انتهاء الوقت: تخسر 300 نقطة.</p>
+            <p>- إجابة خاطئة: تخسر 150 نقطة (نصف) أو تستخدم الحماية.</p>
+            <p>- تخطي: يذهب السؤال للفريق 2 بـ 150 نقطة.</p>
+            <p><strong>5. النذالة الاستراتيجية:</strong></p>
+            <p>- استخدم "كرت النذالة" لسرقة 20% من نقاط المنافس!</p>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true"
+                alt="كرت النذالة">
+            <p><strong>6. النهاية:</strong></p>
+            <p>- عند الوصول إلى 2000 نقطة، يفوز الفريق ويُعرض تحدٍ مضحك للخاسر (مثل "ارقص 30 ثانية").</p>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064528929.png?raw=true"
+                alt="شاشة الفوز">
+            <button onclick="closeGameplay()">إغلاق</button>
         </div>
     </div>
     <div id="footer-placeholder"></div>
     <script src="footer.js"></script>
     <script>
-        // قائمة أسماء عشوائية
         const randomNames = [
-            "الصقور", "النمور", "الأبطال", "المحاربون", "الذئاب", "الفهود",
-            "التنانين", "العمالقة", "الأسود", "الفرسان", "الصيادون", "النجوم"
+            "النذلين المرحين", "شلة الفشلة", "عصابة الكسل", "الدجاج المقلي",
+            "فرقة البطاطس", "جماعة النوم", "الفئران الجريئة", "الموز المشاكس",
+            "الكيك المحترق", "النعال الطائرة", "البطيخ المتمرد", "الجبنة الراكضة",
+            "شلة الشخير", "الصوص المجنون", "الكاتشب الغاضب", "الحمير الذكية",
+            "البيض المكسور", "الفشار المتفجر", "الخيار المتسلل", "الساندويتش الهارب",
+            "القهوة المرة", "الكعك المسطول", "السمك الغبي", "الدونات الخاسرة",
+            "البيتزا النائمة", "الجزر المخادع", "اللبن المنسكب", "البصل الباكي",
+            "الفول الساخر", "التفاح الفاسد", "الخبز المتكبر", "الزبادي المشبوه",
+            "المعكرونة المزعجة", "الأرز المتمرد", "الشاي البارد", "العسل اللزج"
         ];
 
         function goToCategories() {
@@ -245,6 +319,14 @@
             document.getElementById("rulesModal").style.display = "none";
         }
 
+        function showGameplay() {
+            document.getElementById("gameplayModal").style.display = "block";
+        }
+
+        function closeGameplay() {
+            document.getElementById("gameplayModal").style.display = "none";
+        }
+
         function resetForm() {
             document.getElementById("team1NameInput").value = "";
             document.getElementById("team2NameInput").value = "";
@@ -264,16 +346,15 @@
         function updateTeamColors() {
             const team1Color = document.getElementById("team1ColorInput").value;
             const team2Color = document.getElementById("team2ColorInput").value;
-            document.getElementById("team1Row").style.backgroundColor = `${team1Color}33`; // شفافية خفيفة
-            document.getElementById("team2Row").style.backgroundColor = `${team2Color}33`; // شفافية خفيفة
+            document.getElementById("team1Row").style.backgroundColor = `${team1Color}33`;
+            document.getElementById("team2Row").style.backgroundColor = `${team2Color}33`;
         }
 
-        // تحديث الألوان عند تغيير اللون
         document.getElementById("team1ColorInput").addEventListener("input", updateTeamColors);
         document.getElementById("team2ColorInput").addEventListener("input", updateTeamColors);
 
-        // تحديث الألوان عند التحميل
         window.onload = updateTeamColors;
     </script>
 </body>
+
 </html>
