@@ -64,7 +64,6 @@
             padding: 12px;
             margin: 10px;
             font-size: 20px;
-            /* تكبير الخط */
             border: none;
             border-radius: 25px;
             width: 250px;
@@ -101,7 +100,6 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             text-align: center;
-            /* النص في المنتصف */
             color: #fff;
             max-width: 600px;
             width: 90%;
@@ -165,6 +163,19 @@
             cursor: pointer;
             vertical-align: middle;
         }
+
+        /* تنسيقات جديدة لقسم اختيار طريقة اللعب */
+        .game-mode {
+            margin: 20px 0;
+        }
+
+        .game-mode-input {
+            display: none;
+        }
+
+        .game-mode-input.active {
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -184,7 +195,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="team1Row">
+                <tr id="team workspace://khalk-nathel/game.js1Row">
                     <td><input type="text" id="team1NameInput" placeholder="اسم الفريق 1"></td>
                     <td><input type="color" id="team1ColorInput" value="#ff6b6b"></td>
                 </tr>
@@ -203,6 +214,21 @@
                 <option value="hard">صعب (15 ثانية)</option>
             </select>
         </div>
+
+        <div class="game-mode">
+            <h3>اختر طريقة اللعب</h3>
+            <select id="gameMode" onchange="toggleGameModeInput()">
+                <option value="points">نقاط (الفوز عند الوصول لعدد نقاط)</option>
+                <option value="rounds">جولات (الفوز بعد عدد جولات)</option>
+            </select>
+            <div id="pointsInput" class="game-mode-input active">
+                <input type="number" id="winningScore" min="500" step="100" value="2000" placeholder="عدد النقاط للفوز">
+            </div>
+            <div id="roundsInput" class="game-mode-input">
+                <input type="number" id="totalRounds" min="1" step="1" value="10" placeholder="عدد الجولات">
+            </div>
+        </div>
+
         <br>
         <button onclick="goToCategories()">التالي: اختر الفئات</button>
         <button onclick="generateRandomNames()">أسماء عشوائية</button>
@@ -214,11 +240,11 @@
     <div class="modal" id="rulesModal">
         <div class="modal-content">
             <h2>قوانين لعبة خلّك نذل</h2>
-            <p>لعبة "خلّك نذل" هي تحدٍ تنافسي بين فريقين يجمع بين المعرفة، السرعة، والنذالة الاستراتيجية. الهدف هو جمع
-                النقاط والوصول إلى 2000 نقطة للفوز!</p>
+            <p>لعبة "خلّك نذل" هي تحدٍ تنافسي بين فريقين يجمع بين المعرفة، السرعة، والنذالة الاستراتيجية. الهدف هو تحقيق الفوز بناءً على طريقة اللعب المختارة!</p>
             <p><strong>الإعداد:</strong></p>
             <p>- يتكون كل فريق من لاعبين يختارون اسمًا ولونًا مميزًا.</p>
             <p>- يتم اختيار مستوى الصعوبة: سهل (60 ثانية)، متوسط (30 ثانية)، أو صعب (15 ثانية).</p>
+            <p>- اختر طريقة اللعب: نقاط (مثل 2000 نقطة) أو جولات (مثل 10 جولات).</p>
             <p>- كل فريق يختار فئات للفريق المنافس مع نقاط فريدة (100، 200، 300، 400).</p>
             <p><strong>آلية اللعب:</strong></p>
             <p>- يتناوب الفريقان في الإجابة على أسئلة من الفئات التي اختارها الفريق الآخر.</p>
@@ -232,7 +258,8 @@
             <p>- <strong>اتصال بصديق:</strong> يظهر خيارات (تشمل الصحيحة) مرة واحدة للمساعدة.</p>
             <p>- <strong>كرت النذالة:</strong> يسرق 20% من نقاط الفريق المنافس مرة واحدة.</p>
             <p><strong>الفوز:</strong></p>
-            <p>- أول فريق يصل إلى 2000 نقطة يفوز، مع عرض إحصائيات ومهمة مضحكة للخاسر.</p>
+            <p>- إذا اخترت النقاط: أول فريق يصل للعدد المحدد (مثل 2000) يفوز.</p>
+            <p>- إذا اخترت الجولات: الفريق صاحب أعلى نقاط بعد انتهاء الجولات يفوز.</p>
             <button onclick="closeRules()">إغلاق</button>
         </div>
     </div>
@@ -243,19 +270,16 @@
             <p>إليك شرحًا خطوة بخطوة لكيفية لعب "خلّك نذل" مع أمثلة وصور توضيحية:</p>
             <p><strong>1. إعداد اللعبة:</strong></p>
             <p>- أدخل اسمي الفريقين واختر لونًا لكل فريق (مثل "الصقور" بالأحمر و"النمور" بالأزرق).</p>
-            <p>- حدد الصعوبة (مثل "متوسط: 20 ثانية").</p>
+            <p>- حدد الصعوبة (مثل "متوسط: 30 ثانية").</p>
+            <p>- اختر طريقة اللعب: نقاط (مثل 2000) أو جولات (مثل 10).</p>
             <p><strong>2. اختيار الفئات والنقاط:</strong></p>
             <p>- كل فريق يختار 4 فئات للمنافس (مثل "رياضة"، "تاريخ") مع نقاط فريدة (100، 200، 300، 400).</p>
-            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_063918393.png?raw=true"
-                alt="شاشة اختيار الفئات">
-            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064121123.png?raw=true
-            " alt="شاشة اختيار الفئات">
-
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_063918393.png?raw=true" alt="شاشة اختيار الفئات">
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064121123.png?raw=true" alt="شاشة اختيار الفئات">
             <p><strong>3. بدء الجولة:</strong></p>
             <p>- يظهر سؤال للفريق 1 من فئة اختارها الفريق 2 (مثل "ما عاصمة فرنسا؟" بـ 300 نقطة).</p>
-            <p>- لديك 20 ثانية للإجابة أو استخدام خيار خاص.</p>
-            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064307074.png?raw=true"
-                alt="شاشة السؤال">
+            <p>- لديك 30 ثانية للإجابة أو استخدام خيار خاص.</p>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064307074.png?raw=true" alt="شاشة السؤال">
             <p><strong>4. الإجابة أو الخيارات:</strong></p>
             <p>- إجابة صحيحة: تكسب 300 نقطة وطاقة حماية.</p>
             <p>- انتهاء الوقت: تخسر 300 نقطة.</p>
@@ -263,15 +287,15 @@
             <p>- تخطي: يذهب السؤال للفريق 2 بـ 150 نقطة.</p>
             <p><strong>5. النذالة الاستراتيجية:</strong></p>
             <p>- استخدم "كرت النذالة" لسرقة 20% من نقاط المنافس!</p>
-            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true"
-                alt="كرت النذالة">
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" alt="كرت النذالة">
             <p><strong>6. النهاية:</strong></p>
-            <p>- عند الوصول إلى 2000 نقطة، يفوز الفريق ويُعرض تحدٍ مضحك للخاسر (مثل "ارقص 30 ثانية").</p>
-            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064528929.png?raw=true"
-                alt="شاشة الفوز">
+            <p>- النقاط: عند الوصول للهدف (مثل 2000)، يفوز الفريق.</p>
+            <p>- الجولات: بعد انتهاء العدد (مثل 10)، أعلى نقاط يفوز.</p>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064528929.png?raw=true" alt="شاشة الفوز">
             <button onclick="closeGameplay()">إغلاق</button>
         </div>
     </div>
+
     <div id="footer-placeholder"></div>
     <script src="footer.js"></script>
     <script>
@@ -293,6 +317,9 @@
             const team1Color = document.getElementById("team1ColorInput").value;
             const team2Color = document.getElementById("team2ColorInput").value;
             const difficulty = document.getElementById("difficulty").value;
+            const gameMode = document.getElementById("gameMode").value;
+            const winningScore = document.getElementById("winningScore").value;
+            const totalRounds = document.getElementById("totalRounds").value;
 
             if (!team1Name || !team2Name) {
                 alert("يرجى إدخال أسماء الفريقين!");
@@ -302,13 +329,32 @@
                 alert("أسماء الفريقين يجب أن تكون مختلفة!");
                 return;
             }
+            if (gameMode === "points" && (!winningScore || winningScore < 500)) {
+                alert("يرجى إدخال عدد نقاط صالح (500 أو أكثر)!");
+                return;
+            }
+            if (gameMode === "rounds" && (!totalRounds || totalRounds < 1)) {
+                alert("يرجى إدخال عدد جولات صالح (1 أو أكثر)!");
+                return;
+            }
 
             localStorage.setItem("team1Name", team1Name);
             localStorage.setItem("team2Name", team2Name);
             localStorage.setItem("team1Color", team1Color);
             localStorage.setItem("team2Color", team2Color);
             localStorage.setItem("difficulty", difficulty);
+            localStorage.setItem("gameMode", gameMode);
+            localStorage.setItem("winningScore", winningScore);
+            localStorage.setItem("totalRounds", totalRounds);
             window.location.href = "categories.html";
+        }
+
+        function toggleGameModeInput() {
+            const gameMode = document.getElementById("gameMode").value;
+            const pointsInput = document.getElementById("pointsInput");
+            const roundsInput = document.getElementById("roundsInput");
+            pointsInput.classList.toggle("active", gameMode === "points");
+            roundsInput.classList.toggle("active", gameMode === "rounds");
         }
 
         function showRules() {
@@ -333,6 +379,10 @@
             document.getElementById("team1ColorInput").value = "#ff6b6b";
             document.getElementById("team2ColorInput").value = "#00eaff";
             document.getElementById("difficulty").value = "easy";
+            document.getElementById("gameMode").value = "points";
+            document.getElementById("winningScore").value = "2000";
+            document.getElementById("totalRounds").value = "10";
+            toggleGameModeInput();
             updateTeamColors();
         }
 
@@ -353,7 +403,10 @@
         document.getElementById("team1ColorInput").addEventListener("input", updateTeamColors);
         document.getElementById("team2ColorInput").addEventListener("input", updateTeamColors);
 
-        window.onload = updateTeamColors;
+        window.onload = function() {
+            updateTeamColors();
+            toggleGameModeInput();
+        };
     </script>
 </body>
 
