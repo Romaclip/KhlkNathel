@@ -5,309 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لعبة خلك نذل</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
+        /* تعريف متغيرات الألوان */
         :root {
-            --team1-color: #ff6b6b;
-            --team2-color: #00eaff;
+            --team1-color: #ff6b6b; /* افتراضي */
+            --team2-color: #00eaff; /* افتراضي */
         }
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63);
-            color: #fff;
-            margin: 0;
-            padding: 10px;
-            min-height: 100vh;
-            direction: rtl;
-            font-size: 1.2rem;
-            overflow-x: hidden;
-        }
-        .container {
-            max-width: 100%;
-            margin: 10px auto;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-        .header {
-            text-align: center;
-            position: relative;
-        }
-        .header img.game-icon {
-            width: 60px;
-            vertical-align: middle;
-            margin-left: 8px;
-            animation: bounce 2s infinite;
+            font-size: 1.5rem; /* تكبير الخط العام */
         }
         h1 {
-            font-size: 2.5rem;
-            color: #fff;
-            margin: 0;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            display: inline;
+            font-size: 3rem; /* تكبير عنوان اللعبة */
         }
-        .game-content {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            gap: 20px;
-        }
-        .team-box {
-            width: 28%;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 15px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+        .question, #currentTurn, #timer, .team-box, .button-container button, .modal-content {
+            font-size: 1.8rem; /* تكبير الخط للأسئلة والعناصر الرئيسية */
         }
         .team-box.team1 {
-            border: 3px solid var(--team1-color);
-            color: var(--team1-color);
+            background: var(--team1-color)33; /* خلفية مع شفافية */
+            color: var(--team1-color); /* لون النصوص */
+            transition: all 0.3s ease; /* تأثير انتقال سلس */
         }
         .team-box.team2 {
-            border: 3px solid var(--team2-color);
-            color: var(--team2-color);
+            background: var(--team2-color)33; /* خلفية مع شفافية */
+            color: var(--team2-color); /* لون النصوص */
+            transition: all 0.3s ease; /* تأثير انتقال سلس */
         }
-        .team-box.active-team {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px currentColor;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        .team-box h3 {
-            font-size: 1.8rem;
-            margin: 0 0 10px;
-            color: inherit;
-            text-shadow: 0 0 5px currentColor;
-        }
-        .team-box div {
-            font-size: 1.4rem;
-            margin: 8px 0;
-        }
-        .energy-text button {
-            padding: 6px 12px;
-            font-size: 1.2rem;
-            background: transparent;
-            border: 2px solid currentColor;
-            border-radius: 15px;
-            color: inherit;
-            cursor: pointer;
-            margin-right: 8px;
-            transition: all 0.3s ease;
-        }
-        .energy-text button:hover:not(:disabled) {
-            background: currentColor;
-            color: #fff;
-        }
-        .energy-text button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .game-area {
-            width: 40%;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 15px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-        #currentTurn {
-            font-size: 1.6rem;
-            margin-bottom: 10px;
+        .team-box.team1 h3, .team-box.team2 h3 {
+            color: inherit; /* لون العنوان يرث من الأب */
         }
         #currentTurn.team1-turn {
             color: var(--team1-color);
-            text-shadow: 0 0 5px var(--team1-color);
         }
         #currentTurn.team2-turn {
             color: var(--team2-color);
-            text-shadow: 0 0 5px var(--team2-color);
         }
-        #rounds {
-            font-size: 1.4rem;
-            color: #e0e0e0;
-            margin-bottom: 10px;
-        }
-        #timer {
-            font-size: 1.4rem;
-            color: #ff6b6b;
-            margin-bottom: 15px;
-        }
-        #question {
-            font-size: 1.6rem;
-            color: #e0e0e0;
-            margin: 15px 0;
-            line-height: 1.4;
-        }
-        #media img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-        #result {
-            font-size: 1.4rem;
-            margin: 15px 0;
-        }
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-        .button-container button {
-            padding: 10px 20px;
-            font-size: 1.4rem;
-            background: linear-gradient(45deg, #ff2e63, #ff6b6b);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .button-container button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .modal-content {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            color: #fff;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            max-width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        .modal-content h2 {
-            font-size: 2rem;
-            color: #00eaff;
-            margin-bottom: 15px;
-        }
-        .modal-content p {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-        }
-        .modal-content button {
-            padding: 10px 25px;
-            font-size: 1.4rem;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 5px;
-        }
-        .modal-content button:hover {
-            transform: translateY(-3px);
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
-            60% { transform: translateY(-7px); }
-        }
-        @media (max-width: 768px) {
-            body {
-                font-size: 1rem;
-            }
-            .container {
-                padding: 5px;
-                gap: 10px;
-            }
-            .header img.game-icon {
-                width: 50px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            .game-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .team-box, .game-area {
-                width: 100%;
-            }
-            .team-box h3 {
-                font-size: 1.5rem;
-            }
-            .team-box div {
-                font-size: 1.2rem;
-            }
-            .energy-text button {
-                padding: 5px 10px;
-                font-size: 1rem;
-            }
-            #currentTurn, #rounds, #timer, #question, #result {
-                font-size: 1.2rem;
-            }
-            .button-container button {
-                padding: 8px 15px;
-                font-size: 1.2rem;
-            }
-            .modal-content {
-                padding: 15px;
-            }
-            .modal-content h2 {
-                font-size: 1.8rem;
-            }
-            .modal-content p {
-                font-size: 1.2rem;
-            }
-            .modal-content button {
-                padding: 8px 20px;
-                font-size: 1.2rem;
-            }
+        .team-box.active-team {
+            border: 3px solid currentColor; /* إطار مميز للفريق الحالي */
+            transform: scale(1.05); /* تكبير طفيف */
+            box-shadow: 0 0 10px currentColor; /* تأثير وميض */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <img src="https://img.icons8.com/doodle/100/000000/question-mark.png" class="game-icon" alt="Question Icon">
-            <h1>لعبة خلك نذل</h1>
+        <img src="https://img.icons8.com/doodle/100/000000/question-mark.png" class="game-icon" alt="Question Icon">
+        <h1>لعبة خلك نذل</h1>
+        <div id="currentTurn">دور: الفريق 1</div>
+        <div id="timer">الوقت المتبقي: 30</div>
+        <div class="question" id="question"></div>
+        <div id="media"></div>
+        <div class="button-container">
+            <button onclick="revealAnswer()">اكشف الإجابة<span class="info">؟<div class="popover">يكشف الإجابة الصحيحة للسؤال الحالي</div></span></button>
+            <button onclick="skipQuestion()" id="skipBtn">تخطي السؤال<span class="info">؟<div class="popover">يتيح للفريق تخطي السؤال للفريق الآخر بنصف النقاط (مرة واحدة)</div></span></button>
+            <button onclick="doubleChallenge()" id="doubleBtn">التحدي المضاعف<span class="info">؟<div class="popover">يضاعف نقاط السؤال الحالي (مرة واحدة)</div></span></button>
+            <button onclick="callFriend()" id="callFriendBtn">اتصال بصديق<span class="info">؟<div class="popover">يعرض خيارات متعددة لمساعدة صديق (مرة واحدة)</div></span></button>
         </div>
-        <div class="game-content">
+        <div id="result"></div>
+        <div class="team-container">
             <div class="team-box team1" id="team1Box">
                 <h3 id="team1Name">الفريق 1</h3>
                 <div id="team1Score">نقاط: 0</div>
-                <div id="team1Energy" class="energy-text">طاقة الحماية: 0 (مستخدم: 0/2)</div>
+                <div id="team1Energy" class="energy-text">طاقة الحماية: 0 (مستخدم: 0/2)<span class="info">؟<div class="popover">تُكتسب عند الإجابة الصحيحة وتُستخدم لتجنب خسارة النقاط (حتى مرتين)</div></span></div>
+                <div id="team1Skip" class="energy-text">تخطي: متاح</div>
                 <div id="team1Double" class="energy-text">تحدي مضاعف: متاح</div>
                 <div id="team1Call" class="energy-text">اتصال بصديق: متاح</div>
-                <div id="team1NastyCard" class="energy-text">كرت النذالة (خصم 20%): متاح<button onclick="useNastyCard(1)" id="nastyCardTeam1Btn">استخدام</button></div>
-            </div>
-            <div class="game-area">
-                <div id="currentTurn">دور: الفريق 1</div>
-                <div id="rounds"></div>
-                <div id="timer">الوقت المتبقي: 60</div>
-                <div id="question"></div>
-                <div id="media"></div>
-                <div id="result"></div>
-                <div class="button-container">
-                    <button onclick="revealAnswer()">اكشف الإجابة</button>
-                    <button onclick="doubleChallenge()">التحدي المضاعف</button>
-                    <button onclick="callFriend()">اتصال بصديق</button>
-                </div>
             </div>
             <div class="team-box team2" id="team2Box">
                 <h3 id="team2Name">الفريق 2</h3>
                 <div id="team2Score">نقاط: 0</div>
-                <div id="team2Energy" class="energy-text">طاقة الحماية: 0 (مستخدم: 0/2)</div>
+                <div id="team2Energy" class="energy-text">طاقة الحماية: 0 (مستخدم: 0/2)<span class="info">؟<div class="popover">تُكتسب عند الإجابة الصحيحة وتُستخدم لتجنب خسارة النقاط (حتى مرتين)</div></span></div>
+                <div id="team2Skip" class="energy-text">تخطي: متاح</div>
                 <div id="team2Double" class="energy-text">تحدي مضاعف: متاح</div>
                 <div id="team2Call" class="energy-text">اتصال بصديق: متاح</div>
-                <div id="team2NastyCard" class="energy-text">كرت النذالة (خصم 20%): متاح<button onclick="useNastyCard(2)" id="nastyCardTeam2Btn">استخدام</button></div>
             </div>
         </div>
     </div>
@@ -317,7 +87,7 @@
         <div class="modal-content">
             <h2>الإجابة الصحيحة</h2>
             <p id="answerText"></p>
-            <button onclick="teamCorrect()" style="background: linear-gradient(45deg, #2ecc71, #27ae60);">صحيح</button>
+            <button onclick="teamCorrect(currentTurn)" style="background: linear-gradient(45deg, #2ecc71, #27ae60);">صحيح</button>
             <button onclick="wrongAnswer()" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">خاطئ</button>
         </div>
     </div>
@@ -331,33 +101,42 @@
     <div class="modal" id="readyModal">
         <div class="modal-content">
             <h2 id="readyText">جاهزين؟</h2>
-            <button onclick="startNextTurn()" style="background: linear-gradient(45deg, #ff2e63, #ff6b6b);">جاهز</button>
+            <button onclick="startNextTurn()">جاهز</button>
         </div>
     </div>
     <div class="modal" id="callFriendModal">
         <div class="modal-content">
             <h2>اتصال بصديق</h2>
             <div id="callFriendOptions"></div>
-            <button onclick="closeCallFriend()" style="background: linear-gradient(45deg, #ff2e63, #ff6b6b);">إغلاق</button>
+            <button onclick="closeCallFriend()">إغلاق</button>
         </div>
     </div>
     <div class="modal" id="penaltyModal">
         <div class="modal-content">
             <h2>نتيجة اللعبة والحكم</h2>
             <p id="penaltyText"></p>
-            <button onclick="restartGame()" style="background: linear-gradient(45deg, #ff2e63, #ff6b6b);">إعادة اللعب</button>
+            <button onclick="restartGame()">إعادة اللعب</button>
         </div>
     </div>
 
+    <div id="footer-placeholder"></div>
     <script src="questions.js"></script>
+    <script src="footer.js"></script>
     <script src="penalties.js"></script>
     <script src="game.js"></script>
+    <script src="ui.js"></script>
     <script>
-        // تحديث الفريق النشط
+        // تطبيق الألوان من localStorage
+        const team1Color = localStorage.getItem("team1Color") || "#ff6b6b";
+        const team2Color = localStorage.getItem("team2Color") || "#00eaff";
+        document.documentElement.style.setProperty('--team1-color', team1Color);
+        document.documentElement.style.setProperty('--team2-color', team2Color);
+
+        // السكربت التفاعلي للفريق الحالي
         function updateActiveTeam() {
             const team1Box = document.getElementById("team1Box");
             const team2Box = document.getElementById("team2Box");
-            if (GameState.currentTurn === 1) {
+            if (currentTurn === 1) {
                 team1Box.classList.add("active-team");
                 team2Box.classList.remove("active-team");
             } else {
@@ -365,8 +144,10 @@
                 team1Box.classList.remove("active-team");
             }
         }
+
+        // استدعاء التحديث عند التحميل وكل تغيير في الدور
         window.addEventListener('load', updateActiveTeam);
-        document.addEventListener('turnChanged', updateActiveTeam);
+        document.addEventListener('turnChanged', updateActiveTeam); // حدث مخصص من game.js
     </script>
 </body>
 </html>
