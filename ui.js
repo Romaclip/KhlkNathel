@@ -18,6 +18,10 @@ const team2DoubleDiv = document.getElementById("team2Double");
 const team2CallDiv = document.getElementById("team2Call");
 const team1NameDiv = document.getElementById("team1Name");
 const team2NameDiv = document.getElementById("team2Name");
+const team1NastyCardDiv = document.getElementById("team1NastyCard");
+const team2NastyCardDiv = document.getElementById("team2NastyCard");
+const team1NastyCardBtn = document.getElementById("nastyCardTeam1Btn");
+const team2NastyCardBtn = document.getElementById("nastyCardTeam2Btn");
 const answerModal = document.getElementById("answerModal");
 const answerText = document.getElementById("answerText");
 const protectionModal = document.getElementById("protectionModal");
@@ -66,7 +70,18 @@ function startNextTurn() {
     readyModal.style.display = "none";
     resultDiv.innerHTML = "";
     loadQuestion();
+    if (questionDiv.innerHTML === "") {
+        console.log("فشل تحميل السؤال، إعادة المحاولة...");
+        loadQuestion();
+    }
     startTimer();
+}
+
+function updateNastyCardUI() {
+    team1NastyCardDiv.innerHTML = `كرت النذالة: ${team1NastyCardUsed ? "مستخدم" : "متاح"}<span class="info">؟<div class="popover">يأخذ 20% من نقاط الفريق الآخر قبل الجولة (مرة واحدة)</div></span><button onclick="useNastyCard(1)" id="nastyCardTeam1Btn"${team1NastyCardUsed ? " disabled" : ""}>استخدام</button>`;
+    team2NastyCardDiv.innerHTML = `كرت النذالة: ${team2NastyCardUsed ? "مستخدم" : "متاح"}<span class="info">؟<div class="popover">يأخذ 20% من نقاط الفريق الآخر قبل الجولة (مرة واحدة)</div></span><button onclick="useNastyCard(2)" id="nastyCardTeam2Btn"${team2NastyCardUsed ? " disabled" : ""}>استخدام</button>`;
+    if (team1NastyCardUsed) team1NastyCardBtn.disabled = true;
+    if (team2NastyCardUsed) team2NastyCardBtn.disabled = true;
 }
 
 function restartGame() {
@@ -76,10 +91,11 @@ function restartGame() {
     team1SkipUsed = team2SkipUsed = false;
     team1DoubleUsed = team2DoubleUsed = false;
     team1CallUsed = team2CallUsed = false;
+    team1NastyCardUsed = team2NastyCardUsed = false;
     team1Correct = team1Wrong = team1Skips = 0;
     team2Correct = team2Wrong = team2Skips = 0;
     usedQuestions = [];
-    currentTurn = 1;
+    currentTurn = Math.random() < 0.5 ? 1 : 2;
     team1ScoreDiv.innerHTML = `نقاط: 0`;
     team1EnergyDiv.innerHTML = `طاقة الحماية: 0 (مستخدم: 0/2)`;
     team1SkipDiv.innerHTML = "تخطي: متاح";
@@ -90,10 +106,19 @@ function restartGame() {
     team2SkipDiv.innerHTML = "تخطي: متاح";
     team2DoubleDiv.innerHTML = "تحدي مضاعف: متاح";
     team2CallDiv.innerHTML = "اتصال بصديق: متاح";
+    updateNastyCardUI();
     updateTurnDisplay();
     penaltyModal.style.display = "none";
     document.querySelector(".container").style.display = "block";
-    promptNextTurn();
+    if (confirm("جاهزين نبدأ؟")) {
+        console.log("اللاعب وافق على إعادة اللعبة، تحميل السؤال...");
+        loadQuestion();
+        if (questionDiv.innerHTML === "") {
+            console.log("فشل تحميل السؤال عند الإعادة، إعادة المحاولة...");
+            loadQuestion();
+        }
+        startTimer();
+    } else {
+        resultDiv.innerHTML = "تم إلغاء بدء اللعبة. أعد تحميل الصفحة لبدء اللعب مرة أخرى.";
+    }
 }
-
-// لا تستدعي initializeGame() هنا لأنها في game.js
