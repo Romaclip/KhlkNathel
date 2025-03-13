@@ -84,24 +84,66 @@
             font-size: 1.4rem;
             margin: 8px 0;
         }
+        .energy-text {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin: 10px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .energy-text:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        .energy-text::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+        .energy-text:hover::before {
+            opacity: 1;
+        }
+        .energy-text span {
+            font-size: 1.3rem;
+            color: inherit;
+            text-shadow: 0 0 5px currentColor;
+            position: relative;
+            z-index: 1;
+        }
         .energy-text button {
             padding: 6px 12px;
             font-size: 1.2rem;
             background: transparent;
             border: 2px solid currentColor;
-            border-radius: 15px;
+            border-radius: 20px;
             color: inherit;
             cursor: pointer;
-            margin-right: 8px;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
         .energy-text button:hover:not(:disabled) {
             background: currentColor;
             color: #fff;
+            transform: scale(1.05);
         }
         .energy-text button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            border-color: #666;
         }
         .game-area {
             width: 40%;
@@ -220,56 +262,21 @@
             60% { transform: translateY(-7px); }
         }
         @media (max-width: 768px) {
-            body {
-                font-size: 1rem;
-            }
-            .container {
-                padding: 5px;
-                gap: 10px;
-            }
-            .header img.game-icon {
-                width: 50px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            .game-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .team-box, .game-area {
-                width: 100%;
-            }
-            .team-box h3 {
-                font-size: 1.5rem;
-            }
-            .team-box div {
-                font-size: 1.2rem;
-            }
-            .energy-text button {
-                padding: 5px 10px;
-                font-size: 1rem;
-            }
-            #currentTurn, #rounds, #timer, #question, #result {
-                font-size: 1.2rem;
-            }
-            .button-container button {
-                padding: 8px 15px;
-                font-size: 1.2rem;
-            }
-            .modal-content {
-                padding: 15px;
-            }
-            .modal-content h2 {
-                font-size: 1.8rem;
-            }
-            .modal-content p {
-                font-size: 1.2rem;
-            }
-            .modal-content button {
-                padding: 8px 20px;
-                font-size: 1.2rem;
-            }
+            body { font-size: 1rem; }
+            .container { padding: 5px; gap: 10px; }
+            .header img.game-icon { width: 50px; }
+            h1 { font-size: 2rem; }
+            .game-content { flex-direction: column; gap: 15px; }
+            .team-box, .game-area { width: 100%; }
+            .team-box h3 { font-size: 1.5rem; }
+            .team-box div { font-size: 1.2rem; }
+            .energy-text button { padding: 5px 10px; font-size: 1rem; }
+            #currentTurn, #rounds, #timer, #question, #result { font-size: 1.2rem; }
+            .button-container button { padding: 8px 15px; font-size: 1.2rem; }
+            .modal-content { padding: 15px; }
+            .modal-content h2 { font-size: 1.8rem; }
+            .modal-content p { font-size: 1.2rem; }
+            .modal-content button { padding: 8px 20px; font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -283,10 +290,12 @@
             <div class="team-box team1" id="team1Box">
                 <h3 id="team1Name">الفريق 1</h3>
                 <div id="team1Score">نقاط: 0</div>
-                <div id="team1Energy" class="energy-text">طاقة الحماية: 0 (مستخدم: 0/2)</div>
-                <div id="team1Double" class="energy-text">تحدي مضاعف: متاح</div>
-                <div id="team1Call" class="energy-text">اتصال بصديق: متاح</div>
-                <div id="team1NastyCard" class="energy-text">كرت النذالة (خصم 20%): متاح<button onclick="useNastyCard(1)" id="nastyCardTeam1Btn">استخدام</button></div>
+                <div id="team1Energy" class="energy-text"><span>طاقة الحماية: 0 (مستخدم: 0/2)</span></div>
+                <div id="team1Double" class="energy-text"><span>تحدي مضاعف: متاح</span></div>
+                <div id="team1Call" class="energy-text"><span>اتصال بصديق: متاح</span></div>
+                <div id="team1NastyCard" class="energy-text"><span>كرت الباتسي (خصم 20%): متاح</span><button onclick="useNastyCard(1)" id="nastyCardTeam1Btn">استخدام</button></div>
+                <div id="team1FreezeCard" class="energy-text"><span>كرت التجميد (10 ثوانٍ): متاح</span><button onclick="useFreezeCard(1)" id="freezeCardTeam1Btn">استخدام</button></div>
+                <div id="team1WindowCard" class="energy-text"><span>كرت ارفع الدريشة (خصم 70%): 0/5 إجابات</span><button onclick="useWindowCard(1)" id="windowCardTeam1Btn" disabled>استخدام</button></div>
             </div>
             <div class="game-area">
                 <div id="currentTurn">دور: الفريق 1</div>
@@ -304,10 +313,12 @@
             <div class="team-box team2" id="team2Box">
                 <h3 id="team2Name">الفريق 2</h3>
                 <div id="team2Score">نقاط: 0</div>
-                <div id="team2Energy" class="energy-text">طاقة الحماية: 0 (مستخدم: 0/2)</div>
-                <div id="team2Double" class="energy-text">تحدي مضاعف: متاح</div>
-                <div id="team2Call" class="energy-text">اتصال بصديق: متاح</div>
-                <div id="team2NastyCard" class="energy-text">كرت النذالة (خصم 20%): متاح<button onclick="useNastyCard(2)" id="nastyCardTeam2Btn">استخدام</button></div>
+                <div id="team2Energy" class="energy-text"><span>طاقة الحماية: 0 (مستخدم: 0/2)</span></div>
+                <div id="team2Double" class="energy-text"><span>تحدي مضاعف: متاح</span></div>
+                <div id="team2Call" class="energy-text"><span>اتصال بصديق: متاح</span></div>
+                <div id="team2NastyCard" class="energy-text"><span>كرت الباتسي (خصم 20%): متاح</span><button onclick="useNastyCard(2)" id="nastyCardTeam2Btn">استخدام</button></div>
+                <div id="team2FreezeCard" class="energy-text"><span>كرت التجميد (10 ثوانٍ): متاح</span><button onclick="useFreezeCard(2)" id="freezeCardTeam2Btn">استخدام</button></div>
+                <div id="team2WindowCard" class="energy-text"><span>كرت ارفع الدريشة (خصم 70%): 0/5 إجابات</span><button onclick="useWindowCard(2)" id="windowCardTeam2Btn" disabled>استخدام</button></div>
             </div>
         </div>
     </div>
@@ -350,23 +361,6 @@
     </div>
 
     <script src="questions.js"></script>
-    <script src="penalties.js"></script>
     <script src="game.js"></script>
-    <script>
-        // تحديث الفريق النشط
-        function updateActiveTeam() {
-            const team1Box = document.getElementById("team1Box");
-            const team2Box = document.getElementById("team2Box");
-            if (GameState.currentTurn === 1) {
-                team1Box.classList.add("active-team");
-                team2Box.classList.remove("active-team");
-            } else {
-                team2Box.classList.add("active-team");
-                team1Box.classList.remove("active-team");
-            }
-        }
-        window.addEventListener('load', updateActiveTeam);
-        document.addEventListener('turnChanged', updateActiveTeam);
-    </script>
 </body>
 </html>

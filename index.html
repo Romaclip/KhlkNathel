@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ar">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,39 +12,33 @@
             background: linear-gradient(135deg, #0f0c29, #302b63);
             color: #fff;
             margin: 0;
-            padding: 10px; /* تقليل الحشوة للشاشات الصغيرة */
+            padding: 10px;
             direction: rtl;
             min-height: 100vh;
         }
-
         .container {
-        margin: 10px auto;
-        padding: 15px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 25px; /* زيادة الانحناء للمستطيل الرئيسي */
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
-        max-width: 100%;
-        backdrop-filter: blur(10px);
+            margin: 10px auto;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            max-width: 100%;
+            backdrop-filter: blur(10px);
         }
-
         h1 {
-            font-size: 28px; /* تقليل حجم العنوان */
+            font-size: 28px;
             text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
             color: #00eaff;
             margin: 10px 0;
         }
-
         h3 {
-            font-size: 20px; /* تقليل حجم العنوان الفرعي */
+            font-size: 20px;
             margin: 10px 0;
             color: #e0e0e0;
-            
         }
-
         button {
-            padding: 10px 20px; /* تقليل حجم الأزرار */
+            padding: 10px 20px;
             font-size: 16px;
-            
             margin: 5px;
             background: linear-gradient(45deg, #ff2e63, #ff6b6b);
             color: white;
@@ -54,79 +47,67 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-            width: 90%; /* جعل الأزرار تمتد على العرض */
-            max-width: 300px; /* حد أقصى للعرض */
+            width: 90%;
+            max-width: 300px;
         }
-
         button:hover {
             background: linear-gradient(45deg, #ff6b6b, #ff2e63);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
-
-        input,
-        select {
+        input, select {
             padding: 10px;
             margin: 5px;
-            font-size: 16px; /* تقليل حجم النص */
+            font-size: 16px;
             border: none;
             border-radius: 20px;
-            width: 90%; /* جعل الحقول تمتد على العرض */
+            width: 90%;
             max-width: 250px;
             background: rgba(255, 255, 255, 0.95);
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
         }
-
         .game-icon {
-            width: 100px; /* تقليل حجم الأيقونة */
+            width: 100px;
             margin: 10px auto;
             display: block;
-            
             filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.6));
         }
-
         .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
-            
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
             z-index: 1000;
         }
-
         .modal-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(255, 255, 255, 0.15);
-        padding: 20px;
-        border-radius: 25px; /* زيادة الانحناء للنافذة المنبثقة */
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(10px);
-        text-align: center;
-        color: #fff;
-        width: 90%;
-        max-height: 80vh;
-        overflow-y: auto;
-    }
-
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            color: #fff;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
         .modal-content h2 {
-            font-size: 24px; /* تقليل حجم العنوان */
+            font-size: 24px;
             color: #00eaff;
             margin-bottom: 15px;
-            
         }
-
         .modal-content p {
-            font-size: 16px; /* تقليل حجم النص */
+            font-size: 16px;
             margin: 8px 0;
             line-height: 1.5;
         }
-
         .modal-content img {
             max-width: 100%;
             height: auto;
@@ -134,105 +115,63 @@
             border-radius: 8px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
         }
-
         .modal-content button {
             width: 80%;
             margin: 10px auto;
         }
-
         .teams-table {
-        width: 100%;
-        margin: 10px auto;
-        border-collapse: separate; /* تغيير إلى separate للسماح بالانحناء */
-        border-spacing: 0; /* إزالة المسافات بين الخلايا */
-        border-radius: 15px; /* إضافة انحناء للجدول */
-        overflow: hidden; /* ضمان قطع الزوايا الداخلية */
+            width: 100%;
+            margin: 10px auto;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 15px;
+            overflow: hidden;
         }
-
-        .teams-table th,
-    .teams-table td {
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .teams-table th {
-        background: rgba(255, 255, 255, 0.2);
-        color: #00eaff;
-    }
-
-    .teams-table td {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
+        .teams-table th, .teams-table td {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .teams-table th {
+            background: rgba(255, 255, 255, 0.2);
+            color: #00eaff;
+        }
+        .teams-table td {
+            background: rgba(255, 255, 255, 0.1);
+        }
         input[type="color"] {
-            width: 50px; /* تقليل حجم حقل اللون */
+            width: 50px;
             height: 30px;
             padding: 0;
-            
             border: none;
             border-radius: 8px;
             cursor: pointer;
             vertical-align: middle;
         }
-
         .game-mode {
             margin: 10px 0;
         }
-
         .game-mode-input {
             display: none;
         }
-
         .game-mode-input.active {
-            display: block; /* تغيير إلى block للشاشات الصغيرة */
+            display: block;
         }
-
-        /* استعلامات الوسائط للشاشات الصغيرة */
         @media (max-width: 600px) {
-            h1 {
-                font-size: 24px;
-            }
-
-            h3 {
-                font-size: 18px;
-            }
-
-            button {
-                font-size: 14px;
-                padding: 8px 15px;
-            }
-
-            input,
-            select {
-                font-size: 14px;
-                padding: 8px;
-            }
-
-            .game-icon {
-                width: 80px;
-            }
-
-            .modal-content h2 {
-                font-size: 20px;
-            }
-
-            .modal-content p {
-                font-size: 14px;
-            }
-
-            .teams-table th,
-            .teams-table td {
-                font-size: 14px;
-                padding: 8px;
-            }
+            h1 { font-size: 24px; }
+            h3 { font-size: 18px; }
+            button { font-size: 14px; padding: 8px 15px; }
+            input, select { font-size: 14px; padding: 8px; }
+            .game-icon { width: 80px; }
+            .modal-content h2 { font-size: 20px; }
+            .modal-content p { font-size: 14px; }
+            .teams-table th, .teams-table td { font-size: 14px; padding: 8px; }
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" class="game-icon" width="auto" height="auto" alt="شعار خلّك نذل">
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" class="game-icon" alt="شعار خلّك نذل">
         <p style="font-size: 18px; color: #e0e0e0; margin: 20px 0;">
             مرحبًا بكم في "خلّك نذل"! جهزوا أنفسكم لتحدي مليء بالنذالة والضحك!
         </p>
@@ -246,7 +185,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="team workspace://khalk-nathel/game.js1Row">
+                <tr id="team1Row">
                     <td><input type="text" id="team1NameInput" placeholder="اسم الفريق 1"></td>
                     <td><input type="color" id="team1ColorInput" value="#ff6b6b"></td>
                 </tr>
@@ -343,6 +282,7 @@
             <p>- النقاط: عند الوصول للهدف (مثل 2000)، يفوز الفريق.</p>
             <p>- الجولات: بعد انتهاء العدد (مثل 10)، أعلى نقاط يفوز.</p>
             <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064528929.png?raw=true" alt="شاشة الفوز">
+            <br>
             <button onclick="closeGameplay()">إغلاق</button>
         </div>
     </div>
@@ -460,5 +400,4 @@
         };
     </script>
 </body>
-
 </html>

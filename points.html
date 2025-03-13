@@ -75,7 +75,7 @@
         }
         .point-card {
             background: rgba(255, 255, 255, 0.15);
-            border-radius: 50px 50px; /* شكل جديد: دائري من جهة وزوايا حادة من جهة أخرى */
+            border-radius: 50px 50px;
             padding: 20px;
             width: 200px;
             text-align: center;
@@ -117,24 +117,27 @@
             position: relative;
             z-index: 1;
         }
+        /* تعديل ستايل الاختيار */
         .point-card select {
             width: 85%;
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
-            border: 2px solid #fff;
-            border-radius: 20px;
+            border: 2px solid #00eaff;
+            border-radius: 25px;
             outline: none;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
+            box-shadow: 0 0 8px rgba(0, 234, 255, 0.3);
         }
         .point-card select:hover,
         .point-card select:focus {
             background: rgba(255, 255, 255, 0.2);
-            border-color: #00eaff;
+            box-shadow: 0 0 12px rgba(0, 234, 255, 0.6);
+            border-color: #feca57;
         }
         .point-card option {
             background: #302b63;
@@ -145,6 +148,14 @@
         }
         .team2-title {
             color: var(--team2-color);
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 36px; }
+            h3 { font-size: 24px; }
+            .point-card { width: 180px; }
+            .point-card select { font-size: 14px; padding: 10px; }
+            .instructions { font-size: 16px; }
+            .game-icon { width: 100px; }
         }
     </style>
 </head>
@@ -180,7 +191,7 @@
             "الكويت": "https://img.icons8.com/fluency/80/000000/kuwait.png",
             "معلومات عامة": "https://cdn-icons-png.flaticon.com/512/6551/6551510.png",
             "ألغاز": "https://img.icons8.com/fluency/80/000000/puzzle.png",
-            "المترجم":"https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png",
+            "المترجم": "https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png",
             "تاريخ": "https://images.vexels.com/media/users/3/177597/isolated/preview/49a54f12899c810e1bf467afa7dc6ffb-history-book-manual-badge-sticker.png",
             "علوم": "https://img.icons8.com/fluency/80/000000/microscope.png",
             "فنون وآداب": "https://hempstead.ploud.net/kids-teens/middle-schoolers/music-and-art.png/@@images/image.png",
@@ -190,11 +201,11 @@
             "اعلام": "https://png.pngtree.com/png-clipart/20220829/ourmid/pngtree-all-countries-flag-icons-png-image_6129495.png",
             "فنون عربية": "https://www.pngplay.com/wp-content/uploads/6/Film-Icon-Background-PNG-Image.png",
             "وزارة العدل": "https://www.freeiconspng.com/uploads/justice-icon-9.png",
-            "شخصيات":"https://cdn-icons-png.flaticon.com/512/13437/13437588.png",
+            "شخصيات": "https://cdn-icons-png.flaticon.com/512/13437/13437588.png",
             "الدوري الكويتي": "https://upload.wikimedia.org/wikipedia/commons/6/64/Dawri_Zain_Logo.png",
             "الألعاب": "https://png.pngtree.com/png-clipart/20230216/ourmid/pngtree-blue-joystick-for-gaming-png-image_6603316.png",
-            "المطبخ": "https://www.freeiconspng.com/thumbs/fast-food-png/fast-food-png-most-popular-fast-food-snacks-in-your-area-and-most--3.png" ,
-            "الطب": "https://png.pngtree.com/png-clipart/20231006/original/pngtree-cartoon-character-doctor-png-image_13129991.png" ,
+            "المطبخ": "https://www.freeiconspng.com/thumbs/fast-food-png/fast-food-png-most-popular-fast-food-snacks-in-your-area-and-most--3.png",
+            "الطب": "https://png.pngtree.com/png-clipart/20231006/original/pngtree-cartoon-character-doctor-png-image_13129991.png",
             "السيارات": "https://png.pngtree.com/png-clipart/20230216/ourmid/pngtree-cute-red-car-cartoon-style-png-image_6603388.png",
             "عملات وعواصم": "https://static.vecteezy.com/system/resources/thumbnails/019/617/753/small/group-of-money-symbol-png.png"
         };
