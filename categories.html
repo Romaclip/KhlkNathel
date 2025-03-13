@@ -9,120 +9,129 @@
         body {
             font-family: 'Tajawal', sans-serif;
             text-align: center;
-            background: linear-gradient(135deg, #0f0c29, #302b63);
-            color: #fff;
+            background: linear-gradient(135deg, #1a1a3d, #3b3b7a);
+            color: #e0e0e0;
             margin: 0;
-            padding: 10px;
+            padding: 20px;
             direction: rtl;
             min-height: 100vh;
         }
         .container {
-            margin: 10px auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-            max-width: 1000px;
-            backdrop-filter: blur(10px);
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            max-width: 1100px;
+            backdrop-filter: blur(12px);
         }
         h1 {
-            font-size: 36px;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-            color: #00eaff;
-            margin: 10px 0;
-        }
-        h2 {
-            font-size: 24px;
-            margin: 10px 0;
-            color: #e0e0e0;
+            font-size: 40px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            color: #66d9ff;
+            margin: 0 0 20px;
         }
         .description {
             font-size: 20px;
-            color: #feca57;
-            margin: 15px 0;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px 20px;
+            color: #ffd966;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 25px;
             border-radius: 15px;
             display: inline-block;
         }
         .teams-container {
             display: flex;
             justify-content: space-between;
-            gap: 15px;
-            margin: 15px 0;
+            gap: 25px;
+            margin: 30px 0;
         }
         .team-table {
             width: 48%;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .team-table:hover {
+            transform: translateY(-5px);
         }
         .team-table.team1 {
-            border: 2px solid var(--team1-color);
+            border: 3px solid var(--team1-color);
         }
         .team-table.team2 {
-            border: 2px solid var(--team2-color);
+            border: 3px solid var(--team2-color);
+        }
+        h2 {
+            font-size: 26px;
+            margin: 0 0 15px;
+            color: #fff;
         }
         .category-list {
             list-style: none;
             padding: 0;
-            margin: 5px 0;
-            max-height: 300px;
+            margin: 0;
+            max-height: 350px;
             overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #66d9ff rgba(255, 255, 255, 0.1);
         }
         .category-list li {
-            padding: 8px;
+            padding: 15px;
             font-size: 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .category-list li img {
-            width: 35px;
-            height: 35px;
-            object-fit: contain;
-            margin-left: 8px;
-        }
-        .category-list li button {
-            padding: 8px 20px;
-            font-size: 18px;
-            background: transparent;
-            color: #fff;
-            border: 2px solid #fff;
-            border-radius: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin: 5px 0;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .category-list li.selected button {
-            background: #fff;
-            color: #302b63;
+        .category-list li:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        .category-list li.selected {
+            background: rgba(102, 217, 255, 0.3);
+            border: 2px solid #66d9ff;
         }
         .category-list li.disabled {
-            opacity: 0.5;
-        }
-        .category-list li.disabled button {
+            opacity: 0.6;
             cursor: not-allowed;
         }
+        .category-list li.disabled:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: none;
+        }
+        .category-list li img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            margin-left: 15px;
+        }
+        .category-text {
+            flex-grow: 1;
+            text-align: right;
+        }
         .start-btn {
-            padding: 12px 40px;
-            font-size: 20px;
-            margin: 10px;
-            background: linear-gradient(45deg, #ff2e63, #ff6b6b);
-            color: white;
+            padding: 15px 50px;
+            font-size: 22px;
+            margin: 20px 0 0;
+            background: linear-gradient(45deg, #ff4d4d, #ff8080);
+            color: #fff;
             border: none;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         .start-btn:hover {
-            background: linear-gradient(45deg, #ff6b6b, #ff2e63);
+            background: linear-gradient(45deg, #ff8080, #ff4d4d);
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
-        /* أنماط النافذة المنبثقة */
         .modal {
             display: none;
             position: fixed;
@@ -130,7 +139,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 1000;
         }
         .modal-content {
@@ -138,57 +147,62 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.15);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
             text-align: center;
             color: #fff;
             width: 90%;
-            max-width: 400px;
+            max-width: 450px;
         }
         .modal-content p {
-            font-size: 20px;
-            color: #feca57;
-            margin: 15px 0;
+            font-size: 22px;
+            color: #ffd966;
+            margin: 0 0 20px;
         }
         .modal-content button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background: linear-gradient(45deg, #ff2e63, #ff6b6b);
-            color: white;
+            padding: 12px 30px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #ff4d4d, #ff8080);
+            color: #fff;
             border: none;
-            border-radius: 20px;
+            border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .modal-content button:hover {
-            background: linear-gradient(45deg, #ff6b6b, #ff2e63);
+            background: linear-gradient(45deg, #ff8080, #ff4d4d);
             transform: translateY(-2px);
         }
         @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
             .teams-container {
                 flex-direction: column;
-                gap: 10px;
+                gap: 20px;
             }
             .team-table {
                 width: 100%;
             }
-            h1 { font-size: 28px; }
-            h2 { font-size: 20px; }
-            .category-list li { font-size: 18px; }
-            .category-list li button { padding: 6px 15px; font-size: 16px; }
-            .start-btn { padding: 10px 30px; font-size: 18px; }
-            .modal-content p { font-size: 18px; }
-            .modal-content button { font-size: 14px; padding: 8px 15px; }
+            h1 { font-size: 32px; }
+            h2 { font-size: 22px; }
+            .description { font-size: 18px; }
+            .category-list li { font-size: 18px; padding: 12px; }
+            .category-list li img { width: 35px; height: 35px; }
+            .start-btn { padding: 12px 40px; font-size: 20px; }
+            .modal-content { padding: 20px; max-width: 350px; }
+            .modal-content p { font-size: 20px; }
+            .modal-content button { padding: 10px 25px; font-size: 16px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>اختيار الفئات</h1>
-        <p class="description">اختار نقطة ضعف خصمك خله يتوهق يا "نذل"</p>
+        <p class="description">اختار نقطة ضعف خصمك وخلّه يتوهق يا "نذل"</p>
         <div class="teams-container">
             <div class="team-table team1">
                 <h2 id="team1Title">الفريق 1: اختر 4 فئات</h2>
@@ -201,10 +215,9 @@
         </div>
         <button class="start-btn" onclick="goToPoints()">التالي</button>
     </div>
-    <!-- نافذة الخطأ المنبثقة -->
     <div class="modal" id="errorModal">
         <div class="modal-content">
-            <p>اخترت 4 كافي مو حلاو ترا</p>
+            <p>اخترت 4، كافي مو حلاوة ترى!</p>
             <button onclick="closeErrorModal()">إغلاق</button>
         </div>
     </div>
@@ -275,13 +288,12 @@
             img.src = imageSrc;
             img.alt = category;
 
-            const button = document.createElement("button");
-            button.textContent = "اختيار";
-            button.onclick = () => toggleCategory(category, team);
+            const textSpan = document.createElement("span");
+            textSpan.className = "category-text";
+            textSpan.textContent = category;
 
             li.appendChild(img);
-            li.appendChild(document.createTextNode(category));
-            li.appendChild(button);
+            li.appendChild(textSpan);
 
             const selectedArray = team === 1 ? team1Selected : team2Selected;
             const otherArray = team === 1 ? team2Selected : team1Selected;
@@ -291,7 +303,8 @@
             }
             if (otherArray.includes(category)) {
                 li.classList.add("disabled");
-                button.disabled = true;
+            } else {
+                li.onclick = () => toggleCategory(category, team);
             }
 
             return li;
@@ -331,7 +344,6 @@
             window.location.href = "points.html";
         }
 
-        // وظائف النافذة المنبثقة
         function showErrorModal() {
             document.getElementById("errorModal").style.display = "block";
         }

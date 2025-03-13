@@ -103,21 +103,49 @@
             color: #00eaff;
             margin-bottom: 15px;
         }
+        .modal-content h3 {
+            font-size: 20px;
+            color: #e0e0e0;
+            margin: 15px 0 10px;
+        }
         .modal-content p {
             font-size: 16px;
             margin: 8px 0;
             line-height: 1.5;
         }
         .modal-content img {
-            max-width: 100%;
+            width: 200px;
             height: auto;
             margin: 10px 0;
             border-radius: 8px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .modal-content img:hover {
+            transform: scale(1.05);
         }
         .modal-content button {
             width: 80%;
             margin: 10px auto;
+        }
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
         }
         .teams-table {
             width: 100%;
@@ -164,7 +192,9 @@
             input, select { font-size: 14px; padding: 8px; }
             .game-icon { width: 80px; }
             .modal-content h2 { font-size: 20px; }
+            .modal-content h3 { font-size: 16px; }
             .modal-content p { font-size: 14px; }
+            .modal-content img { width: 150px; }
             .teams-table th, .teams-table td { font-size: 14px; padding: 8px; }
         }
     </style>
@@ -222,84 +252,67 @@
         <br>
         <button onclick="goToCategories()">التالي: اختر الفئات</button>
         <button onclick="generateRandomNames()">أسماء عشوائية</button>
-        <button onclick="showRules()">قوانين اللعبة</button>
-        <button onclick="showGameplay()">طريقة اللعب</button>
+        <button onclick="showRulesAndGameplay()">قوانين وطريقة اللعب</button>
         <button onclick="resetForm()">إعادة تعيين</button>
     </div>
 
-    <div class="modal" id="rulesModal">
+    <div class="modal" id="rulesAndGameplayModal">
         <div class="modal-content">
-            <h2>قوانين لعبة خلّك نذل</h2>
-            <p>لعبة "خلّك نذل" هي تحدٍ تنافسي بين فريقين يجمع بين المعرفة، السرعة، والنذالة الاستراتيجية. الهدف هو تحقيق الفوز بناءً على طريقة اللعب المختارة!</p>
-            <p><strong>الإعداد:</strong></p>
-            <p>- يتكون كل فريق من لاعبين يختارون اسمًا ولونًا مميزًا.</p>
-            <p>- يتم اختيار مستوى الصعوبة: سهل (60 ثانية)، متوسط (30 ثانية)، أو صعب (15 ثانية).</p>
-            <p>- اختر طريقة اللعب: نقاط (مثل 2000 نقطة) أو جولات (مثل 10 جولات).</p>
-            <p>- كل فريق يختار فئات للفريق المنافس مع نقاط فريدة (100، 200، 300، 400).</p>
-            <p><strong>آلية اللعب:</strong></p>
-            <p>- يتناوب الفريقان في الإجابة على أسئلة من الفئات التي اختارها الفريق الآخر.</p>
-            <p>- الإجابة الصحيحة تمنح النقاط المحددة ونقطة طاقة حماية.</p>
-            <p>- انتهاء الوقت يخصم النقاط كاملة، بينما الإجابة الخاطئة تخصم نصف النقاط (ما لم تُستخدم الحماية).</p>
-            <p>- إذا تم تخطي السؤال، يُعرض على الفريق الآخر بنصف النقاط الأصلية.</p>
-            <p><strong>الخيارات الخاصة:</strong></p>
-            <p>- <strong>طاقة الحماية:</strong> تمنع خسارة النقاط عند الإجابة الخاطئة (متاحة مرتين).</p>
+            <h2>قوانين وطريقة لعب خلّك نذل</h2>
+            <p>"خلّك نذل" هي لعبة تنافسية تجمع بين المعرفة، السرعة، والنذالة الذكية بين فريقين. الهدف هو الفوز بناءً على النقاط أو الجولات!</p>
+
+            <h3>1. إعداد اللعبة</h3>
+            <p>- كل فريق يختار اسمًا ولونًا (مثل "الصقور" بالأحمر و"النمور" بالأزرق).</p>
+            <p>- اختر مستوى الصعوبة: سهل (60 ثانية)، متوسط (30 ثانية)، أو صعب (15 ثانية).</p>
+            <p>- حدد طريقة اللعب: نقاط (مثل 2000 نقطة للفوز) أو جولات (مثل 10 جولات).</p>
+
+            <h3>2. اختيار الفئات والنقاط</h3>
+            <p>- كل فريق يختار 4 فئات للفريق المنافس (مثل "رياضة" أو "تاريخ") مع نقاط مختلفة: 100، 200، 300، 400.</p>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_063918393.png?raw=true" alt="شاشة اختيار الفئات" onclick="showImage(this.src)">
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064121123.png?raw=true" alt="شاشة اختيار الفئات" onclick="showImage(this.src)">
+
+            <h3>3. الجولات واللعب</h3>
+            <p>- يتناوب الفريقان على الإجابة عن أسئلة من الفئات التي اختارها الفريق الآخر.</p>
+            <p>- مثال: "ما عاصمة فرنسا؟" بـ 300 نقطة، ولديك 30 ثانية (حسب الصعوبة).</p>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064307074.png?raw=true" alt="شاشة السؤال" onclick="showImage(this.src)">
+            <p>- الإجابة الصحيحة: تكسب النقاط كاملة (300) + نقطة طاقة حماية.</p>
+            <p>- انتهاء الوقت: تخسر النقاط كاملة (300).</p>
+            <p>- الإجابة الخاطئة: تخسر نصف النقاط (150) ما لم تستخدم الحماية.</p>
+            <p>- التخطي: السؤال ينتقل للفريق الآخر بنصف النقاط (150).</p>
+
+            <h3>4. الخيارات الخاصة (النذالة والمساعدة)</h3>
+            <p>- <strong>طاقة الحماية:</strong> تمنع خسارة النقاط عند الخطأ (مرتين لكل فريق).</p>
             <p>- <strong>تخطي السؤال:</strong> مرة واحدة لكل فريق، ينقل السؤال للمنافس بنصف النقاط.</p>
-            <p>- <strong>التحدي المضاعف:</strong> يضاعف النقاط مرة واحدة، لكن الخسارة تكون مضاعفة أيضًا.</p>
-            <p>- <strong>اتصال بصديق:</strong> يظهر خيارات (تشمل الصحيحة) مرة واحدة للمساعدة.</p>
-            <p>- <strong>كرت النذالة:</strong> يسرق 20% من نقاط الفريق المنافس مرة واحدة.</p>
-            <p><strong>الفوز:</strong></p>
-            <p>- إذا اخترت النقاط: أول فريق يصل للعدد المحدد (مثل 2000) يفوز.</p>
-            <p>- إذا اخترت الجولات: الفريق صاحب أعلى نقاط بعد انتهاء الجولات يفوز.</p>
-            <button onclick="closeRules()">إغلاق</button>
+            <p>- <strong>التحدي المضاعف:</strong> يضاعف النقاط (مرة واحدة)، لكن الخسارة مضاعفة أيضًا.</p>
+            <p>- <strong>اتصال بصديق:</strong> يظهر خيارات (مع الإجابة الصحيحة) مرة واحدة.</p>
+            <p>- <strong>كرت النذالة:</strong> يسرق 20% من نقاط المنافس (مرة واحدة).</p>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" alt="كرت النذالة" onclick="showImage(this.src)">
+
+            <h3>5. الفوز</h3>
+            <p>- <strong>النقاط:</strong> أول فريق يصل للعدد المحدد (مثل 2000) يفوز.</p>
+            <p>- <strong>الجولات:</strong> بعد انتهاء العدد (مثل 10)، الفريق ذو النقاط الأعلى يفوز.</p>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064528929.png?raw=true" alt="شاشة الفوز" onclick="showImage(this.src)">
+
+            <button onclick="closeRulesAndGameplay()">إغلاق</button>
         </div>
     </div>
 
-    <div class="modal" id="gameplayModal">
-        <div class="modal-content">
-            <h2>طريقة اللعب في خلّك نذل</h2>
-            <p>إليك شرحًا خطوة بخطوة لكيفية لعب "خلّك نذل" مع أمثلة وصور توضيحية:</p>
-            <p><strong>1. إعداد اللعبة:</strong></p>
-            <p>- أدخل اسمي الفريقين واختر لونًا لكل فريق (مثل "الصقور" بالأحمر و"النمور" بالأزرق).</p>
-            <p>- حدد الصعوبة (مثل "متوسط: 30 ثانية").</p>
-            <p>- اختر طريقة اللعب: نقاط (مثل 2000) أو جولات (مثل 10).</p>
-            <p><strong>2. اختيار الفئات والنقاط:</strong></p>
-            <p>- كل فريق يختار 4 فئات للمنافس (مثل "رياضة"، "تاريخ") مع نقاط فريدة (100، 200، 300، 400).</p>
-            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_063918393.png?raw=true" alt="شاشة اختيار الفئات">
-            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064121123.png?raw=true" alt="شاشة اختيار الفئات">
-            <p><strong>3. بدء الجولة:</strong></p>
-            <p>- يظهر سؤال للفريق 1 من فئة اختارها الفريق 2 (مثل "ما عاصمة فرنسا؟" بـ 300 نقطة).</p>
-            <p>- لديك 30 ثانية للإجابة أو استخدام خيار خاص.</p>
-            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064307074.png?raw=true" alt="شاشة السؤال">
-            <p><strong>4. الإجابة أو الخيارات:</strong></p>
-            <p>- إجابة صحيحة: تكسب 300 نقطة وطاقة حماية.</p>
-            <p>- انتهاء الوقت: تخسر 300 نقطة.</p>
-            <p>- إجابة خاطئة: تخسر 150 نقطة (نصف) أو تستخدم الحماية.</p>
-            <p>- تخطي: يذهب السؤال للفريق 2 بـ 150 نقطة.</p>
-            <p><strong>5. النذالة الاستراتيجية:</strong></p>
-            <p>- استخدم "كرت النذالة" لسرقة 20% من نقاط المنافس!</p>
-            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" alt="كرت النذالة">
-            <p><strong>6. النهاية:</strong></p>
-            <p>- النقاط: عند الوصول للهدف (مثل 2000)، يفوز الفريق.</p>
-            <p>- الجولات: بعد انتهاء العدد (مثل 10)، أعلى نقاط يفوز.</p>
-            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/image_2025-03-09_064528929.png?raw=true" alt="شاشة الفوز">
-            <br>
-            <button onclick="closeGameplay()">إغلاق</button>
-        </div>
+    <div class="image-modal" id="imageModal" onclick="closeImage()">
+        <img id="enlargedImage" src="" alt="صورة مكبرة">
     </div>
 
     <div id="footer-placeholder"></div>
     <script src="footer.js"></script>
     <script>
         const randomNames = [
-            "النذلين المرحين", "شلة الفشلة", "عصابة الكسل", "الدجاج المقلي",
-            "فرقة البطاطس", "جماعة النوم", "الفئران الجريئة", "الموز المشاكس",
-            "الكيك المحترق", "النعال الطائرة", "البطيخ المتمرد", "الجبنة الراكضة",
-            "شلة الشخير", "الصوص المجنون", "الكاتشب الغاضب", "الحمير الذكية",
-            "البيض المكسور", "الفشار المتفجر", "الخيار المتسلل", "الساندويتش الهارب",
-            "القهوة المرة", "الكعك المسطول", "السمك الغبي", "الدونات الخاسرة",
-            "البيتزا النائمة", "الجزر المخادع", "اللبن المنسكب", "البصل الباكي",
-            "الفول الساخر", "التفاح الفاسد", "الخبز المتكبر", "الزبادي المشبوه",
-            "المعكرونة المزعجة", "الأرز المتمرد", "الشاي البارد", "العسل اللزج"
+            "شلة الفريج", "عيال الديوانية", "النذل الرزة", "فريق الشاي مر", 
+            "جماعة الكبسة", "عصابة الدقوس", "الرقاد الثقيل", "شباب السايدة", 
+            "فرقة الهوامير", "أهل العود", "عيال القرقيعان", "شلة الجليب", 
+            "جماعة الفنيطل", "النذل الكشتة", "فريق التمر", "عصابة الحمام", 
+            "شباب الدسمة", "أهل المرقوق", "فرقة الشيشة", "عيال الحداق", 
+            "شلة الخيام", "جماعة المطبق", "النذل الفريجي", "فريق الهريس", 
+            "عصابة الجريش", "شباب الصباحية", "أهل القيصرية", "فرقة المشخول", 
+            "عيال السفرة", "شلة الدوغة", "جماعة اللبن", "النذل البدوي"
         ];
 
         function goToCategories() {
@@ -348,20 +361,23 @@
             roundsInput.classList.toggle("active", gameMode === "rounds");
         }
 
-        function showRules() {
-            document.getElementById("rulesModal").style.display = "block";
+        function showRulesAndGameplay() {
+            document.getElementById("rulesAndGameplayModal").style.display = "block";
         }
 
-        function closeRules() {
-            document.getElementById("rulesModal").style.display = "none";
+        function closeRulesAndGameplay() {
+            document.getElementById("rulesAndGameplayModal").style.display = "none";
         }
 
-        function showGameplay() {
-            document.getElementById("gameplayModal").style.display = "block";
+        function showImage(src) {
+            const imageModal = document.getElementById("imageModal");
+            const enlargedImage = document.getElementById("enlargedImage");
+            enlargedImage.src = src;
+            imageModal.style.display = "flex";
         }
 
-        function closeGameplay() {
-            document.getElementById("gameplayModal").style.display = "none";
+        function closeImage() {
+            document.getElementById("imageModal").style.display = "none";
         }
 
         function resetForm() {
