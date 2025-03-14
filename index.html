@@ -4,74 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إعداد لعبة خلّك نذل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            text-align: center;
-            background: linear-gradient(135deg, #0f0c29, #302b63);
-            color: #fff;
+        * {
             margin: 0;
-            padding: 10px;
-            direction: rtl;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            direction: rtl;
+            padding: 20px;
+            overflow-x: hidden;
         }
+
         .container {
-            margin: 10px auto;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #fff;
             border-radius: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
-            max-width: 100%;
-            backdrop-filter: blur(10px);
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
         }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
         h1 {
-            font-size: 28px;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
-            color: #00eaff;
+            font-size: 36px;
+            color: #ff4081;
+            text-shadow: 0 2px 5px rgba(255, 64, 129, 0.3);
             margin: 10px 0;
         }
-        h3 {
-            font-size: 20px;
-            margin: 10px 0;
-            color: #e0e0e0;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 5px;
-            background: linear-gradient(45deg, #ff2e63, #ff6b6b);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-            width: 90%;
-            max-width: 300px;
-        }
-        button:hover {
-            background: linear-gradient(45deg, #ff6b6b, #ff2e63);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-        input, select {
-            padding: 10px;
-            margin: 5px;
-            font-size: 16px;
-            border: none;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 250px;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
+
         .game-icon {
             width: 100px;
-            margin: 10px auto;
-            display: block;
-            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.6));
+            transition: transform 0.3s ease;
         }
+
+        .game-icon:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .intro {
+            font-size: 18px;
+            color: #555;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        .clipart {
+            position: absolute;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .clipart-top-left {
+            top: -20px;
+            left: -20px;
+            width: 150px;
+            transform: rotate(-20deg);
+        }
+
+        .clipart-bottom-right {
+            bottom: -30px;
+            right: -30px;
+            width: 150px;
+            transform: rotate(30deg);
+        }
+
+        .teams-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .teams-table th, .teams-table td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .teams-table th {
+            background: #ff4081;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .teams-table td {
+            background: #f9f9f9;
+        }
+
+        input[type="text"], select, input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            color: #333;
+            background: #fff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus, select:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #ff4081;
+            box-shadow: 0 0 8px rgba(255, 64, 129, 0.3);
+        }
+
+        input[type="color"] {
+            width: 50px;
+            height: 40px;
+            padding: 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        input[type="color"]:hover {
+            transform: scale(1.1);
+        }
+
+        .difficulty, .game-mode {
+            margin: 20px 0;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #ff4081;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            background: linear-gradient(90deg, #ff4081, #ff8a80);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #ff8a80, #ff4081);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 64, 129, 0.6);
+        }
+
+        .game-mode-input {
+            display: none;
+        }
+
+        .game-mode-input.active {
+            display: block;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -79,56 +187,55 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 1000;
+            justify-content: center;
+            align-items: center;
         }
+
         .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.15);
-            padding: 20px;
-            border-radius: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            text-align: center;
-            color: #fff;
-            width: 90%;
-            max-height: 80vh;
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 90%;
+            max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
+
         .modal-content h2 {
-            font-size: 24px;
-            color: #00eaff;
-            margin-bottom: 15px;
+            font-size: 28px;
+            color: #ff4081;
+            margin-bottom: 20px;
         }
+
         .modal-content h3 {
             font-size: 20px;
-            color: #e0e0e0;
+            color: #ff4081;
             margin: 15px 0 10px;
         }
+
         .modal-content p {
             font-size: 16px;
-            margin: 8px 0;
-            line-height: 1.5;
+            color: #555;
+            line-height: 1.6;
         }
+
         .modal-content img {
-            width: 200px;
-            height: auto;
-            margin: 10px 0;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 250px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: transform 0.3s ease;
         }
+
         .modal-content img:hover {
             transform: scale(1.05);
         }
-        .modal-content button {
-            width: 80%;
-            margin: 10px auto;
-        }
+
         .image-modal {
             display: none;
             position: fixed;
@@ -141,71 +248,45 @@
             justify-content: center;
             align-items: center;
         }
+
         .image-modal img {
             max-width: 90%;
             max-height: 90vh;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-        }
-        .teams-table {
-            width: 100%;
-            margin: 10px auto;
-            border-collapse: separate;
-            border-spacing: 0;
             border-radius: 15px;
-            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
         }
-        .teams-table th, .teams-table td {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        .teams-table th {
-            background: rgba(255, 255, 255, 0.2);
-            color: #00eaff;
-        }
-        .teams-table td {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        input[type="color"] {
-            width: 50px;
-            height: 30px;
-            padding: 0;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            vertical-align: middle;
-        }
-        .game-mode {
-            margin: 10px 0;
-        }
-        .game-mode-input {
-            display: none;
-        }
-        .game-mode-input.active {
-            display: block;
-        }
-        @media (max-width: 600px) {
-            h1 { font-size: 24px; }
-            h3 { font-size: 18px; }
-            button { font-size: 14px; padding: 8px 15px; }
-            input, select { font-size: 14px; padding: 8px; }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; max-width: 100%; }
+            h1 { font-size: 28px; }
+            .intro { font-size: 16px; }
             .game-icon { width: 80px; }
-            .modal-content h2 { font-size: 20px; }
-            .modal-content h3 { font-size: 16px; }
+            button { font-size: 14px; padding: 12px; }
+            input[type="text"], select, input[type="number"] { font-size: 14px; }
+            .teams-table th, .teams-table td { padding: 10px; }
+            .modal-content h2 { font-size: 24px; }
+            .modal-content h3 { font-size: 18px; }
             .modal-content p { font-size: 14px; }
-            .modal-content img { width: 150px; }
-            .teams-table th, .teams-table td { font-size: 14px; padding: 8px; }
+            .clipart-top-left, .clipart-bottom-right { width: 80px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 24px; }
+            .intro { font-size: 14px; }
+            .game-icon { width: 60px; }
+            .clipart-top-left, .clipart-bottom-right { width: 60px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" class="game-icon" alt="شعار خلّك نذل">
-        <p style="font-size: 18px; color: #e0e0e0; margin: 20px 0;">
-            مرحبًا بكم في "خلّك نذل"! جهزوا أنفسكم لتحدي مليء بالنذالة والضحك!
-        </p>
-        <h1>إعداد لعبة خلّك نذل</h1>
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/ylogo.png?raw=true" class="clipart clipart-top-left" alt="شعار اللعبة">
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/ylogo.png?raw=true" class="clipart clipart-bottom-right" alt="شعار اللعبة">
+        <div class="header">
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" class="game-icon" alt="شعار خلّك نذل">
+            <h1>إعداد لعبة خلّك نذل</h1>
+            <p class="intro">مرحبًا بكم في "خلّك نذل"! استعدوا لتحدي مليء بالمرح والنذالة!</p>
+        </div>
 
         <table class="teams-table">
             <thead>
@@ -249,7 +330,6 @@
             </div>
         </div>
 
-        <br>
         <button onclick="goToCategories()">التالي: اختر الفئات</button>
         <button onclick="generateRandomNames()">أسماء عشوائية</button>
         <button onclick="showRulesAndGameplay()">قوانين وطريقة اللعب</button>
@@ -301,8 +381,6 @@
         <img id="enlargedImage" src="" alt="صورة مكبرة">
     </div>
 
-    <div id="footer-placeholder"></div>
-    <script src="footer.js"></script>
     <script>
         const randomNames = [
             "شلة الفريج", "عيال الديوانية", "النذل الرزة", "فريق الشاي مر", 
@@ -362,7 +440,7 @@
         }
 
         function showRulesAndGameplay() {
-            document.getElementById("rulesAndGameplayModal").style.display = "block";
+            document.getElementById("rulesAndGameplayModal").style.display = "flex";
         }
 
         function closeRulesAndGameplay() {

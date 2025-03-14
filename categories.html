@@ -4,70 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اختيار الفئات - لعبة خلّك نذل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            text-align: center;
-            background: linear-gradient(135deg, #1a1a3d, #3b3b7a);
-            color: #e0e0e0;
+        * {
             margin: 0;
-            padding: 20px;
-            direction: rtl;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            direction: rtl;
+            padding: 20px;
+            overflow-x: hidden;
         }
+
         .container {
-            margin: 0 auto;
+            background: #fff;
+            border-radius: 25px;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
             max-width: 1100px;
-            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            margin: 0 auto; /* Center the container horizontally */
         }
+
+        .clipart {
+            position: absolute;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .clipart-top-left {
+            top: -20px;
+            left: -20px;
+            width: 150px;
+            transform: rotate(-20deg);
+        }
+
+        .clipart-bottom-right {
+            bottom: -30px;
+            right: -30px;
+            width: 120px;
+            transform: rotate(30deg);
+        }
+
         h1 {
-            font-size: 40px;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-            color: #66d9ff;
+            font-size: 36px;
+            color: #ff4081;
+            text-shadow: 0 2px 5px rgba(255, 64, 129, 0.3);
             margin: 0 0 20px;
         }
+
         .description {
-            font-size: 20px;
-            color: #ffd966;
+            font-size: 18px;
+            color: #555;
             margin: 20px 0;
-            background: rgba(0, 0, 0, 0.3);
+            line-height: 1.5;
+            background: rgba(255, 64, 129, 0.1);
             padding: 12px 25px;
             border-radius: 15px;
             display: inline-block;
         }
+
         .teams-container {
             display: flex;
             justify-content: space-between;
             gap: 25px;
             margin: 30px 0;
         }
+
         .team-table {
             width: 48%;
-            background: rgba(255, 255, 255, 0.1);
+            background: #f9f9f9;
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
+
         .team-table:hover {
             transform: translateY(-5px);
         }
+
         .team-table.team1 {
             border: 3px solid var(--team1-color);
         }
+
         .team-table.team2 {
             border: 3px solid var(--team2-color);
         }
+
         h2 {
-            font-size: 26px;
+            font-size: 24px;
+            color: #ff4081;
             margin: 0 0 15px;
-            color: #fff;
         }
+
         .category-list {
             list-style: none;
             padding: 0;
@@ -75,63 +117,73 @@
             max-height: 350px;
             overflow-y: auto;
             scrollbar-width: thin;
-            scrollbar-color: #66d9ff rgba(255, 255, 255, 0.1);
+            scrollbar-color: #ff4081 rgba(0, 0, 0, 0.1);
         }
+
         .category-list li {
             padding: 15px;
-            font-size: 20px;
+            font-size: 18px;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: #fff;
             border-radius: 10px;
             margin: 5px 0;
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
         .category-list li:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 64, 129, 0.1);
             transform: translateX(5px);
         }
+
         .category-list li.selected {
-            background: rgba(102, 217, 255, 0.3);
-            border: 2px solid #66d9ff;
+            background: rgba(255, 64, 129, 0.3);
+            border: 2px solid #ff4081;
         }
+
         .category-list li.disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
+
         .category-list li.disabled:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: #fff;
             transform: none;
         }
+
         .category-list li img {
             width: 40px;
             height: 40px;
             object-fit: contain;
             margin-left: 15px;
         }
+
         .category-text {
             flex-grow: 1;
             text-align: right;
         }
+
         .start-btn {
-            padding: 15px 50px;
-            font-size: 22px;
+            padding: 14px 50px;
+            font-size: 18px;
             margin: 20px 0 0;
-            background: linear-gradient(45deg, #ff4d4d, #ff8080);
+            background: linear-gradient(90deg, #ff4081, #ff8a80);
             color: #fff;
             border: none;
-            border-radius: 30px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
         }
+
         .start-btn:hover {
-            background: linear-gradient(45deg, #ff8080, #ff4d4d);
+            background: linear-gradient(90deg, #ff8a80, #ff4081);
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 64, 129, 0.6);
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -141,66 +193,86 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
             z-index: 1000;
+            justify-content: center;
+            align-items: center;
         }
+
         .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
+            background: #fff;
             border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            padding: 25px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             text-align: center;
-            color: #fff;
-            width: 90%;
-            max-width: 450px;
         }
+
         .modal-content p {
-            font-size: 22px;
-            color: #ffd966;
+            font-size: 20px;
+            color: #ff4081;
             margin: 0 0 20px;
         }
+
         .modal-content button {
             padding: 12px 30px;
-            font-size: 18px;
-            background: linear-gradient(45deg, #ff4d4d, #ff8080);
+            font-size: 16px;
+            background: linear-gradient(90deg, #ff4081, #ff8a80);
             color: #fff;
             border: none;
-            border-radius: 25px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
         }
+
         .modal-content button:hover {
-            background: linear-gradient(45deg, #ff8080, #ff4d4d);
+            background: linear-gradient(90deg, #ff8a80, #ff4081);
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 64, 129, 0.6);
         }
+
+        footer {
+
+            text-align: center;
+            color: #1c1c1c !important;
+
+        }
+
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            .teams-container {
-                flex-direction: column;
-                gap: 20px;
-            }
-            .team-table {
-                width: 100%;
-            }
-            h1 { font-size: 32px; }
-            h2 { font-size: 22px; }
-            .description { font-size: 18px; }
-            .category-list li { font-size: 18px; padding: 12px; }
+            .container { padding: 20px; max-width: 100%; }
+            .teams-container { flex-direction: column; gap: 20px; }
+            .team-table { width: 100%; }
+            h1 { font-size: 28px; }
+            h2 { font-size: 20px; }
+            .description { font-size: 16px; }
+            .category-list li { font-size: 16px; padding: 12px; }
             .category-list li img { width: 35px; height: 35px; }
-            .start-btn { padding: 12px 40px; font-size: 20px; }
-            .modal-content { padding: 20px; max-width: 350px; }
-            .modal-content p { font-size: 20px; }
-            .modal-content button { padding: 10px 25px; font-size: 16px; }
+            .start-btn { padding: 12px 40px; font-size: 16px; }
+            .modal-content p { font-size: 18px; }
+            .modal-content button { padding: 10px 25px; font-size: 14px; }
+            .clipart-top-left { width: 120px; }
+            .clipart-bottom-right { width: 80px; }
+            footer { font-size: 12px; padding: 10px 0; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 24px; }
+            h2 { font-size: 18px; }
+            .description { font-size: 14px; }
+            .category-list li { font-size: 14px; }
+            .category-list li img { width: 30px; height: 30px; }
+            .start-btn { padding: 10px 30px; font-size: 14px; }
+            .clipart-top-left { width: 100px; }
+            .clipart-bottom-right { width: 60px; }
+            footer { font-size: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/ylogo.png?raw=true" class="clipart clipart-top-left" alt="شعار اللعبة">
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" class="clipart clipart-bottom-right" alt="شعار اللعبة">
         <h1>اختيار الفئات</h1>
         <p class="description">اختار نقطة ضعف خصمك وخلّه يتوهق يا "نذل"</p>
         <div class="teams-container">
@@ -221,7 +293,9 @@
             <button onclick="closeErrorModal()">إغلاق</button>
         </div>
     </div>
-    <div id="footer-placeholder"></div>
+    <footer id="footer-placeholder">
+        <p>© 2025 لعبة خلّك نذل - جميع الحقوق محفوظة</p>
+    </footer>
     <script src="questions.js"></script>
     <script src="footer.js"></script>
     <script>
@@ -345,7 +419,7 @@
         }
 
         function showErrorModal() {
-            document.getElementById("errorModal").style.display = "block";
+            document.getElementById("errorModal").style.display = "flex";
         }
 
         function closeErrorModal() {

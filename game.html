@@ -3,214 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة خلك نذل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <title>لعبة خلّك نذل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Add Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
             --team1-color: #ff6b6b;
             --team2-color: #00eaff;
         }
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63);
-            color: #fff;
+
+        * {
             margin: 0;
-            padding: 10px;
-            min-height: 100vh;
-            direction: rtl;
-            font-size: 1.2rem;
-            overflow-x: hidden;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            direction: rtl;
+            padding: 20px;
+            overflow-x: hidden;
+            font-size: 1.2rem;
+        }
+
         .container {
-            max-width: 100%;
-            margin: 10px auto;
-            padding: 10px;
+            background: #fff;
+            border-radius: 25px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
         }
+
+        .clipart {
+            position: absolute;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .clipart-top-left {
+            top: -20px;
+            left: -20px;
+            width: 150px;
+            transform: rotate(-20deg);
+        }
+
+        .clipart-bottom-right {
+            bottom: -30px;
+            right: -30px;
+            width: 120px;
+            transform: rotate(30deg);
+        }
+
         .header {
             text-align: center;
             position: relative;
         }
+
         .header img.game-icon {
             width: 60px;
             vertical-align: middle;
-            margin-left: 8px;
             animation: bounce 2s infinite;
         }
+
         h1 {
             font-size: 2.5rem;
-            color: #fff;
+            color: #ff4081;
             margin: 0;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            display: inline;
+            text-shadow: 0 2px 5px rgba(255, 64, 129, 0.3);
         }
+
         .game-content {
             display: flex;
             justify-content: space-between;
             width: 100%;
             gap: 20px;
         }
+
         .team-box {
-            width: 28%;
-            background: rgba(255, 255, 255, 0.05);
+            width: 30%;
+            background: #f9f9f9;
             border-radius: 15px;
             padding: 15px;
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
         }
+
         .team-box.team1 {
             border: 3px solid var(--team1-color);
             color: var(--team1-color);
         }
+
         .team-box.team2 {
             border: 3px solid var(--team2-color);
             color: var(--team2-color);
         }
+
         .team-box.active-team {
             transform: scale(1.05);
             box-shadow: 0 0 15px currentColor;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 64, 129, 0.1);
         }
+
         .team-box h3 {
             font-size: 1.8rem;
             margin: 0 0 10px;
             color: inherit;
             text-shadow: 0 0 5px currentColor;
         }
+
         .team-box div {
             font-size: 1.4rem;
             margin: 8px 0;
+            color: #333;
         }
+
         .energy-text {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            background: #fff;
             border-radius: 12px;
             padding: 10px 15px;
             margin: 10px 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
+
         .energy-text:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
-        .energy-text::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 0;
-        }
-        .energy-text:hover::before {
-            opacity: 1;
-        }
+
         .energy-text span {
             font-size: 1.3rem;
             color: inherit;
             text-shadow: 0 0 5px currentColor;
-            position: relative;
-            z-index: 1;
         }
+
         .energy-text button {
             padding: 6px 12px;
             font-size: 1.2rem;
-            background: transparent;
-            border: 2px solid currentColor;
-            border-radius: 20px;
-            color: inherit;
+            background: linear-gradient(90deg, #ff4081, #ff8a80);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
+
+        .energy-text button i {
+            font-size: 1.2rem;
+        }
+
+        .energy-text button img {
+            width: 20px;
+            height: 20px;
+        }
+
         .energy-text button:hover:not(:disabled) {
-            background: currentColor;
-            color: #fff;
+            background: linear-gradient(90deg, #ff8a80, #ff4081);
             transform: scale(1.05);
         }
+
         .energy-text button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            border-color: #666;
+            background: #ccc;
         }
+
         .game-area {
-            width: 40%;
-            background: rgba(255, 255, 255, 0.05);
+            width: 44%;
+            background: #f9f9f9;
             border-radius: 15px;
             padding: 15px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+
         #currentTurn {
             font-size: 1.6rem;
             margin-bottom: 10px;
         }
+
         #currentTurn.team1-turn {
             color: var(--team1-color);
             text-shadow: 0 0 5px var(--team1-color);
         }
+
         #currentTurn.team2-turn {
             color: var(--team2-color);
             text-shadow: 0 0 5px var(--team2-color);
         }
-        #rounds {
+
+        #rounds, #timer, #question, #result {
             font-size: 1.4rem;
-            color: #e0e0e0;
+            color: #333;
             margin-bottom: 10px;
         }
+
         #timer {
-            font-size: 1.4rem;
-            color: #ff6b6b;
-            margin-bottom: 15px;
+            color: #ff4081;
         }
+
         #question {
-            font-size: 1.6rem;
-            color: #e0e0e0;
-            margin: 15px 0;
             line-height: 1.4;
         }
+
         #media img {
             max-width: 100%;
             border-radius: 10px;
             margin-bottom: 15px;
         }
-        #result {
-            font-size: 1.4rem;
-            margin: 15px 0;
-        }
+
         .button-container {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
         }
+
         .button-container button {
             padding: 10px 20px;
             font-size: 1.4rem;
-            background: linear-gradient(45deg, #ff2e63, #ff6b6b);
-            color: white;
+            background: linear-gradient(90deg, #ff4081, #ff8a80);
+            color: #fff;
             border: none;
-            border-radius: 20px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+
+        .button-container button i {
+            font-size: 1.2rem;
+        }
+
         .button-container button:hover {
+            background: linear-gradient(90deg, #ff8a80, #ff4081);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -218,52 +270,73 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.7);
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
+
         .modal-content {
-            background: rgba(255, 255, 255, 0.1);
+            background: #fff;
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 20px;
             text-align: center;
-            color: #fff;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
+            color: #333;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             max-width: 90%;
             max-height: 80vh;
             overflow-y: auto;
         }
+
         .modal-content h2 {
             font-size: 2rem;
-            color: #00eaff;
+            color: #ff4081;
             margin-bottom: 15px;
         }
+
         .modal-content p {
             font-size: 1.4rem;
             margin-bottom: 15px;
+            color: #555;
         }
+
         .modal-content button {
             padding: 10px 25px;
             font-size: 1.4rem;
+            background: linear-gradient(90deg, #ff4081, #ff8a80);
+            color: #fff;
             border: none;
-            border-radius: 20px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 5px;
         }
+
         .modal-content button:hover {
+            background: linear-gradient(90deg, #ff8a80, #ff4081);
             transform: translateY(-3px);
         }
+
+        footer {
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.8);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-15px); }
             60% { transform: translateY(-7px); }
         }
+
         @media (max-width: 768px) {
             body { font-size: 1rem; }
-            .container { padding: 5px; gap: 10px; }
+            .container { padding: 15px; max-width: 100%; gap: 10px; }
             .header img.game-icon { width: 50px; }
             h1 { font-size: 2rem; }
             .game-content { flex-direction: column; gap: 15px; }
@@ -271,20 +344,42 @@
             .team-box h3 { font-size: 1.5rem; }
             .team-box div { font-size: 1.2rem; }
             .energy-text button { padding: 5px 10px; font-size: 1rem; }
+            .energy-text button i, .energy-text button img { font-size: 1rem; width: 16px; height: 16px; }
             #currentTurn, #rounds, #timer, #question, #result { font-size: 1.2rem; }
             .button-container button { padding: 8px 15px; font-size: 1.2rem; }
+            .button-container button i { font-size: 1rem; }
             .modal-content { padding: 15px; }
             .modal-content h2 { font-size: 1.8rem; }
             .modal-content p { font-size: 1.2rem; }
             .modal-content button { padding: 8px 20px; font-size: 1.2rem; }
+            .clipart-top-left { width: 120px; }
+            .clipart-bottom-right { width: 80px; }
+            footer { font-size: 12px; padding: 10px 0; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            .team-box h3 { font-size: 1.3rem; }
+            .team-box div { font-size: 1rem; }
+            .energy-text button { padding: 4px 8px; font-size: 0.9rem; }
+            .energy-text button i, .energy-text button img { font-size: 0.9rem; width: 14px; height: 14px; }
+            #currentTurn, #rounds, #timer, #question, #result { font-size: 1rem; }
+            .button-container button { padding: 6px 12px; font-size: 1rem; }
+            .button-container button i { font-size: 0.9rem; }
+            .clipart-top-left { width: 100px; }
+            .clipart-bottom-right { width: 60px; }
+            footer { font-size: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/ylogo.png?raw=true" class="clipart clipart-top-left" alt="شعار اللعبة">
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" class="clipart clipart-bottom-right" alt="شعار اللعبة">
         <div class="header">
-            <img src="https://img.icons8.com/doodle/100/000000/question-mark.png" class="game-icon" alt="Question Icon">
-            <h1>لعبة خلك نذل</h1>
+            <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" class="game-icon" alt="شعار خلّك نذل">
+            <br>
+            <h1>لعبة خلّك نذل</h1>
         </div>
         <div class="game-content">
             <div class="team-box team1" id="team1Box">
@@ -293,9 +388,24 @@
                 <div id="team1Energy" class="energy-text"><span>طاقة الحماية: 0 (مستخدم: 0/2)</span></div>
                 <div id="team1Double" class="energy-text"><span>تحدي مضاعف: متاح</span></div>
                 <div id="team1Call" class="energy-text"><span>اتصال بصديق: متاح</span></div>
-                <div id="team1NastyCard" class="energy-text"><span>كرت الباتسي (خصم 20%): متاح</span><button onclick="useNastyCard(1)" id="nastyCardTeam1Btn">استخدام</button></div>
-                <div id="team1FreezeCard" class="energy-text"><span>كرت التجميد (10 ثوانٍ): متاح</span><button onclick="useFreezeCard(1)" id="freezeCardTeam1Btn">استخدام</button></div>
-                <div id="team1WindowCard" class="energy-text"><span>كرت ارفع الدريشة (خصم 70%): 0/5 إجابات</span><button onclick="useWindowCard(1)" id="windowCardTeam1Btn" disabled>استخدام</button></div>
+                <div id="team1NastyCard" class="energy-text">
+                    <span>كرت الباتسي (خصم 20%): متاح</span>
+                    <button onclick="useNastyCard(1)" id="nastyCardTeam1Btn">
+                        <i class="fas fa-skull-crossbones"></i> استخدام
+                    </button>
+                </div>
+                <div id="team1FreezeCard" class="energy-text">
+                    <span>كرت التجميد (10 ثوانٍ): متاح</span>
+                    <button onclick="useFreezeCard(1)" id="freezeCardTeam1Btn">
+                        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/ylogo.png?raw=true" alt="شعار"> استخدام
+                    </button>
+                </div>
+                <div id="team1WindowCard" class="energy-text">
+                    <span>كرت ارفع الدريشة (خصم 70%): 0/5 إجابات</span>
+                    <button onclick="useWindowCard(1)" id="windowCardTeam1Btn" disabled>
+                        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/ylogo.png?raw=true" alt="شعار"> استخدام
+                    </button>
+                </div>
             </div>
             <div class="game-area">
                 <div id="currentTurn">دور: الفريق 1</div>
@@ -305,9 +415,15 @@
                 <div id="media"></div>
                 <div id="result"></div>
                 <div class="button-container">
-                    <button onclick="revealAnswer()">اكشف الإجابة</button>
-                    <button onclick="doubleChallenge()">التحدي المضاعف</button>
-                    <button onclick="callFriend()">اتصال بصديق</button>
+                    <button onclick="revealAnswer()">
+                        <i class="fas fa-eye"></i> اكشف الإجابة
+                    </button>
+                    <button onclick="doubleChallenge()">
+                        <i class="fas fa-arrow-up"></i> التحدي المضاعف
+                    </button>
+                    <button onclick="callFriend()">
+                        <i class="fas fa-phone"></i> اتصال بصديق
+                    </button>
                 </div>
             </div>
             <div class="team-box team2" id="team2Box">
@@ -316,9 +432,24 @@
                 <div id="team2Energy" class="energy-text"><span>طاقة الحماية: 0 (مستخدم: 0/2)</span></div>
                 <div id="team2Double" class="energy-text"><span>تحدي مضاعف: متاح</span></div>
                 <div id="team2Call" class="energy-text"><span>اتصال بصديق: متاح</span></div>
-                <div id="team2NastyCard" class="energy-text"><span>كرت الباتسي (خصم 20%): متاح</span><button onclick="useNastyCard(2)" id="nastyCardTeam2Btn">استخدام</button></div>
-                <div id="team2FreezeCard" class="energy-text"><span>كرت التجميد (10 ثوانٍ): متاح</span><button onclick="useFreezeCard(2)" id="freezeCardTeam2Btn">استخدام</button></div>
-                <div id="team2WindowCard" class="energy-text"><span>كرت ارفع الدريشة (خصم 70%): 0/5 إجابات</span><button onclick="useWindowCard(2)" id="windowCardTeam2Btn" disabled>استخدام</button></div>
+                <div id="team2NastyCard" class="energy-text">
+                    <span>كرت الباتسي (خصم 20%): متاح</span>
+                    <button onclick="useNastyCard(2)" id="nastyCardTeam2Btn">
+                        <i class="fas fa-skull-crossbones"></i> استخدام
+                    </button>
+                </div>
+                <div id="team2FreezeCard" class="energy-text">
+                    <span>كرت التجميد (10 ثوانٍ): متاح</span>
+                    <button onclick="useFreezeCard(2)" id="freezeCardTeam2Btn">
+                        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/ylogo.png?raw=true" alt="شعار"> استخدام
+                    </button>
+                </div>
+                <div id="team2WindowCard" class="energy-text">
+                    <span>كرت ارفع الدريشة (خصم 70%): 0/5 إجابات</span>
+                    <button onclick="useWindowCard(2)" id="windowCardTeam2Btn" disabled>
+                        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/ylogo.png?raw=true" alt="شعار"> استخدام
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -328,37 +459,43 @@
         <div class="modal-content">
             <h2>الإجابة الصحيحة</h2>
             <p id="answerText"></p>
-            <button onclick="teamCorrect()" style="background: linear-gradient(45deg, #2ecc71, #27ae60);">صحيح</button>
-            <button onclick="wrongAnswer()" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">خاطئ</button>
+            <button onclick="teamCorrect()" style="background: linear-gradient(90deg, #2ecc71, #27ae60);">صحيح</button>
+            <button onclick="wrongAnswer()" style="background: linear-gradient(90deg, #e74c3c, #c0392b);">خاطئ</button>
         </div>
     </div>
     <div class="modal" id="protectionModal">
         <div class="modal-content">
             <h2>استخدام الحماية؟</h2>
-            <button onclick="useProtection()" style="background: linear-gradient(45deg, #3498db, #2980b9);">استخدام الحماية</button>
-            <button onclick="losePoints()" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">خسارة النقاط</button>
+            <button onclick="useProtection()" style="background: linear-gradient(90deg, #3498db, #2980b9);">استخدام الحماية</button>
+            <button onclick="losePoints()" style="background: linear-gradient(90deg, #e74c3c, #c0392b);">خسارة النقاط</button>
         </div>
     </div>
     <div class="modal" id="readyModal">
         <div class="modal-content">
             <h2 id="readyText">جاهزين؟</h2>
-            <button onclick="startNextTurn()" style="background: linear-gradient(45deg, #ff2e63, #ff6b6b);">جاهز</button>
+            <button onclick="startNextTurn()">جاهز</button>
         </div>
     </div>
     <div class="modal" id="callFriendModal">
         <div class="modal-content">
             <h2>اتصال بصديق</h2>
             <div id="callFriendOptions"></div>
-            <button onclick="closeCallFriend()" style="background: linear-gradient(45deg, #ff2e63, #ff6b6b);">إغلاق</button>
+            <button onclick="closeCallFriend()">إغلاق</button>
         </div>
     </div>
     <div class="modal" id="penaltyModal">
         <div class="modal-content">
             <h2>نتيجة اللعبة والحكم</h2>
             <p id="penaltyText"></p>
-            <button onclick="restartGame()" style="background: linear-gradient(45deg, #ff2e63, #ff6b6b);">إعادة اللعب</button>
+            <button onclick="restartGame()">إعادة اللعب</button>
+            <button onclick="window.location.href='index.html'">الصفحة الرئيسية</button>
+            <button onclick="window.location.href='categories.html'">العودة للفئات</button>
         </div>
     </div>
+
+    <footer>
+        <p>© 2025 لعبة خلّك نذل - جميع الحقوق محفوظة</p>
+    </footer>
 
     <script src="questions.js"></script>
     <script src="game.js"></script>

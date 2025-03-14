@@ -3,69 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحديد النقاط</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <title>تحديد النقاط - لعبة خلّك نذل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            text-align: center;
-            background: linear-gradient(135deg, #0f0c29, #302b63);
-            color: #fff;
+        * {
             margin: 0;
-            padding: 20px;
-            direction: rtl;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            direction: rtl;
+            padding: 20px;
+            overflow-x: hidden;
         }
+
         .container {
-            margin: 20px auto;
+            background: #fff;
+            border-radius: 25px;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            width: 100%;
             max-width: 1200px;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            margin: 0 auto;
         }
+
+        .clipart {
+            position: absolute;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .clipart-top-left {
+            top: -20px;
+            left: -20px;
+            width: 150px;
+            transform: rotate(-20deg);
+        }
+
+        .clipart-bottom-right {
+            bottom: -30px;
+            right: -30px;
+            width: 120px;
+            transform: rotate(30deg);
+        }
+
         h1 {
-            font-size: 44px;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-            color: #00eaff;
+            font-size: 36px;
+            color: #ff4081;
+            text-shadow: 0 2px 5px rgba(255, 64, 129, 0.3);
+            margin: 0 0 20px;
         }
+
         h3 {
-            font-size: 28px;
+            font-size: 24px;
+            color: #ff4081;
             margin: 15px 0;
-            color: #e0e0e0;
         }
+
         .instructions {
             font-size: 18px;
-            color: #e0e0e0;
-            background: rgba(255, 255, 255, 0.05);
+            color: #555;
+            background: rgba(255, 64, 129, 0.1);
             padding: 15px;
             border-radius: 15px;
             margin: 20px 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            line-height: 1.5;
         }
-        button {
-            padding: 12px 35px;
-            font-size: 18px;
-            margin: 10px;
-            background: linear-gradient(45deg, #ff2e63, #ff6b6b);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-        }
-        button:hover {
-            background: linear-gradient(45deg, #ff6b6b, #ff2e63);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-        }
+
         .game-icon {
-            width: 140px;
+            width: 100px;
             margin: 20px auto;
             display: block;
-            filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.6));
+            transition: transform 0.3s ease;
         }
+
+        .game-icon:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+
         .points-container {
             display: flex;
             flex-wrap: wrap;
@@ -73,95 +99,128 @@
             gap: 25px;
             margin: 20px 0;
         }
+
         .point-card {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50px 50px;
+            background: #f9f9f9;
+            border-radius: 15px;
             padding: 20px;
             width: 200px;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
-        .point-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
-            transition: all 0.5s ease;
-            z-index: 0;
-        }
-        .point-card:hover::before {
-            top: 0;
-            left: 0;
-        }
+
         .point-card:hover {
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
+
         .point-card img {
             width: 60px;
             height: 60px;
             margin-bottom: 10px;
             object-fit: contain;
-            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
-            position: relative;
-            z-index: 1;
         }
+
         .point-card p {
             margin: 0 0 10px;
             font-size: 18px;
-            position: relative;
-            z-index: 1;
+            color: #333;
         }
-        /* تعديل ستايل الاختيار */
+
         .point-card select {
             width: 85%;
             padding: 12px;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border: 2px solid #00eaff;
-            border-radius: 25px;
+            background: #fff;
+            color: #333;
+            border: 2px solid #ddd;
+            border-radius: 12px;
             outline: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 0 8px rgba(0, 234, 255, 0.3);
         }
+
         .point-card select:hover,
         .point-card select:focus {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 12px rgba(0, 234, 255, 0.6);
-            border-color: #feca57;
+            border-color: #ff4081;
+            box-shadow: 0 0 8px rgba(255, 64, 129, 0.3);
         }
+
         .point-card option {
-            background: #302b63;
-            color: #fff;
+            background: #fff;
+            color: #333;
         }
+
+        button {
+            padding: 14px 50px;
+            font-size: 18px;
+            margin: 20px 0 0;
+            background: linear-gradient(90deg, #ff4081, #ff8a80);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #ff8a80, #ff4081);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 64, 129, 0.6);
+        }
+
         .team1-title {
             color: var(--team1-color);
         }
+
         .team2-title {
             color: var(--team2-color);
         }
+
+        footer {
+
+            text-align: center;
+            color: #2a2a2a !important;
+        }
+
         @media (max-width: 768px) {
-            h1 { font-size: 36px; }
-            h3 { font-size: 24px; }
+            .container { padding: 20px; max-width: 100%; }
+            h1 { font-size: 28px; }
+            h3 { font-size: 20px; }
+            .instructions { font-size: 16px; }
+            .game-icon { width: 80px; }
             .point-card { width: 180px; }
             .point-card select { font-size: 14px; padding: 10px; }
-            .instructions { font-size: 16px; }
-            .game-icon { width: 100px; }
+            .clipart-top-left { width: 120px; }
+            .clipart-bottom-right { width: 80px; }
+            button { padding: 12px 40px; font-size: 16px; }
+            footer { font-size: 12px; padding: 10px 0; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 24px; }
+            h3 { font-size: 18px; }
+            .instructions { font-size: 14px; }
+            .game-icon { width: 60px; }
+            .point-card { width: 160px; }
+            .point-card img { width: 50px; height: 50px; }
+            .point-card p { font-size: 16px; }
+            .point-card select { font-size: 12px; }
+            .clipart-top-left { width: 100px; }
+            .clipart-bottom-right { width: 60px; }
+            button { padding: 10px 30px; font-size: 14px; }
+            footer { font-size: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://img.icons8.com/doodle/100/000000/coins.png" class="game-icon" alt="Points Icon">
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/ylogo.png?raw=true" class="clipart clipart-top-left" alt="شعار اللعبة">
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" class="clipart clipart-bottom-right" alt="شعار اللعبة">
+        <img src="https://github.com/Romaclip/KhlkNathel/blob/main/logo.png?raw=true" class="game-icon" alt="شعار خلّك نذل">
         <h1>تحديد النقاط</h1>
         <div class="instructions">
             <p>كيفية إضافة النقاط: اختر نقاطًا لكل فئة من القائمة المنسدلة. كل قيمة (100، 200، 300، 400) يمكن اختيارها مرة واحدة فقط لكل فريق. تأكد من اختيار نقاط لجميع الفئات قبل بدء اللعبة!</p>
@@ -170,10 +229,11 @@
         <div class="points-container" id="team1Points"></div>
         <h3 id="team2Title" class="team2-title"></h3>
         <div class="points-container" id="team2Points"></div>
-        <br>
         <button onclick="startGame()">ابدأ اللعبة</button>
     </div>
-    <div id="footer-placeholder"></div>
+    <footer id="footer-placeholder">
+        <p>© 2025 لعبة خلّك نذل - جميع الحقوق محفوظة</p>
+    </footer>
     <script src="footer.js"></script>
     <script>
         const team1Name = localStorage.getItem("team1Name") || "الفريق 1";
